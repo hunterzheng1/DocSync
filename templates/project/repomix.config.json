@@ -1,0 +1,26 @@
+{
+  "output": {
+    "filePath": "repomix-output.xml",
+    "style": "xml",
+    "removeComments": false,
+    "removeEmptyLines": true,
+    "topFilesLength": 20
+  },
+  "include": [],
+  "ignore": {
+    "useGitignore": true,
+    "useGlobalPatterns": true,
+    "customPatterns": [
+      "repomix-output.xml",
+      ".env",
+      ".env.*",
+      "*.pem",
+      "*.key",
+      "*.p12",
+      "*.jks",
+      "node_modules/**",
+      "dist/**",
+      "build/**"
+    ]
+  }
+}

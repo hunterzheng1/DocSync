@@ -76,7 +76,7 @@
 
 - **类型**: 测试-骨架
 - **依赖**: 无
-- **状态**: [ ] 未完成
+- **状态**: [x] 已完成
 
 #### 任务描述
 为通用参数解析创建 `test/args.test.mjs` 的测试骨架。
@@ -94,8 +94,8 @@
 3. 添加 `--cwd <path>` 带值参数解析用例。
 
 #### 验收标准
-- [ ] 测试文件存在。
-- [ ] 覆盖 `--force --backup` 和 `--cwd ./demo`。
+- [x] 测试文件存在。
+- [x] 覆盖 `--force --backup` 和 `--cwd ./demo`。
 
 #### 关联设计
 - spec.md 章节：需求项：通用参数解析
@@ -107,7 +107,7 @@
 
 - **类型**: 接口层
 - **依赖**: TASK-CLI-01
-- **状态**: [ ] 未完成
+- **状态**: [x] 已完成
 
 #### 任务描述
 实现 `src/utils/args.mjs`，输出结构化 options 和 rest。
@@ -124,8 +124,8 @@
 3. 对缺值参数抛出带 exitCode 2 的错误。
 
 #### 验收标准
-- [ ] `parseArgs(["--force","--backup"])` 返回 true 布尔值。
-- [ ] `parseArgs(["--cwd","./demo"])` 返回 cwd。
+- [x] `parseArgs(["--force","--backup"])` 返回 true 布尔值。
+- [x] `parseArgs(["--cwd","./demo"])` 返回 cwd。
 
 #### 关联设计
 - spec.md 章节：需求项：通用参数解析
@@ -137,7 +137,7 @@
 
 - **类型**: 测试-骨架
 - **依赖**: 无
-- **状态**: [ ] 未完成
+- **状态**: [x] 已完成
 
 #### 任务描述
 为 `src/cli.mjs` 的默认 help、已知命令和未知命令创建测试骨架。
@@ -154,8 +154,8 @@
 3. 添加未知命令 exit 1 用例。
 
 #### 验收标准
-- [ ] 覆盖默认帮助场景。
-- [ ] 覆盖未知命令场景。
+- [x] 覆盖默认帮助场景。
+- [x] 覆盖未知命令场景。
 
 #### 关联设计
 - spec.md 章节：需求项：命令路由
@@ -167,7 +167,7 @@
 
 - **类型**: 接口层
 - **依赖**: TASK-CLI-03
-- **状态**: [ ] 未完成
+- **状态**: [x] 已完成
 
 #### 任务描述
 实现 `src/cli.mjs` 的 command 识别、options 解析和 handler 分发。
@@ -185,8 +185,8 @@
 3. 对未知 command 输出错误和 help。
 
 #### 验收标准
-- [ ] `main([])` 等价 help。
-- [ ] `main(["unknown"])` 返回或设置失败状态。
+- [x] `main([])` 等价 help。
+- [x] `main(["unknown"])` 返回或设置失败状态。
 
 #### 关联设计
 - spec.md 章节：需求项：命令路由
@@ -198,7 +198,7 @@
 
 - **类型**: 测试-骨架
 - **依赖**: 无
-- **状态**: [ ] 未完成
+- **状态**: [x] 已完成
 
 #### 任务描述
 为 bin 入口、help 输出和 version 输出创建测试或可执行断言骨架。
@@ -215,8 +215,8 @@
 3. 添加 version alias 用例。
 
 #### 验收标准
-- [ ] 测试覆盖 bin 入口。
-- [ ] 测试覆盖 `version/-v/--version`。
+- [x] 测试覆盖 bin 入口。
+- [x] 测试覆盖 `version/-v/--version`。
 
 #### 关联设计
 - spec.md 章节：需求项：npm CLI 包入口
@@ -228,7 +228,7 @@
 
 - **类型**: 配置
 - **依赖**: TASK-CLI-05
-- **状态**: [ ] 未完成
+- **状态**: [x] 已完成
 
 #### 任务描述
 创建 npm manifest、bin 入口、help 和 version 命令模块。
@@ -248,8 +248,8 @@
 3. 实现 help/version 输出。
 
 #### 验收标准
-- [ ] bin 文件以 `#!/usr/bin/env node` 开头。
-- [ ] help 输出包含全部一级命令。
+- [x] bin 文件以 `#!/usr/bin/env node` 开头。
+- [x] help 输出包含全部一级命令。
 
 #### 关联设计
 - spec.md 章节：需求项：npm CLI 包入口
@@ -261,7 +261,7 @@
 
 - **类型**: 测试-验证
 - **依赖**: TASK-CLI-02, TASK-CLI-04, TASK-CLI-06
-- **状态**: [ ] 未完成
+- **状态**: [x] 已完成
 
 #### 任务描述
 运行路由相关测试和基本手动命令。
@@ -280,8 +280,8 @@
 3. 运行 `node bin/docsync.mjs version`。
 
 #### 验收标准
-- [ ] 相关测试通过。
-- [ ] help/version 手动命令退出码为 0。
+- [x] 相关测试通过。
+- [x] help/version 手动命令退出码为 0。
 
 #### 关联设计
 - spec.md 章节：全部需求项
@@ -308,9 +308,9 @@
 
 ### 4.3 手动验证清单
 
-- [ ] `node bin/docsync.mjs help`
-- [ ] `node bin/docsync.mjs version`
-- [ ] `node bin/docsync.mjs unknown`
+- [x] `node bin/docsync.mjs help`
+- [x] `node bin/docsync.mjs version`
+- [x] `node bin/docsync.mjs unknown`
 
 ---
 
@@ -368,9 +368,9 @@
 
 ### 7.3 文档更新
 
-- [ ] 本 capability 不直接更新 README。
-- [ ] 本 capability 不直接更新接口文档。
-- [ ] 本 capability 不直接更新变更日志。
+- [x] 本 capability 不直接更新 README。
+- [x] 本 capability 不直接更新接口文档。
+- [x] 本 capability 不直接更新变更日志。
 
 ---
 

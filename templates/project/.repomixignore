@@ -1,0 +1,25 @@
+# Repomix ignore patterns
+# Exclude sensitive and generated files
+
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.jks
+*.log
+
+node_modules/
+dist/
+build/
+coverage/
+tmp/
+temp/
+
+repomix-output.xml
+repomix-output.txt
+
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

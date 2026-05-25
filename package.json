@@ -1,0 +1,39 @@
+{
+  "name": "@hunterzheng1/docsync",
+  "version": "0.1.0",
+  "description": "Reusable npm CLI for document synchronization workflows: Repomix context, markdownlint, Claude Skill, Codex rules, and AI document sync.",
+  "type": "module",
+  "bin": {
+    "docsync": "bin/docsync.mjs"
+  },
+  "files": [
+    "bin",
+    "src",
+    "templates"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "test": "node --test",
+    "lint": "node --check bin/docsync.mjs && node --check src/cli.mjs",
+    "pack:dry": "npm pack --dry-run",
+    "release:patch": "npm version patch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hunterzheng1/docsync"
+  },
+  "bugs": {
+    "url": "https://github.com/hunterzheng1/docsync/issues"
+  },
+  "homepage": "https://github.com/hunterzheng1/docsync#readme",
+  "license": "MIT",
+  "keywords": [
+    "doc-sync",
+    "document-sync",
+    "claude-code",
+    "repomix",
+    "markdownlint"
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "globs": ["**/*.md"],
+  "ignores": ["node_modules/", "dist/", "build/", "repomix-output.xml"],
+  "fix": true,
+  "markdownlintConfig": {
+    "default": true,
+    "MD013": false,
+    "MD041": false
+  }
+}
