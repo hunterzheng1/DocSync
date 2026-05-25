@@ -96,7 +96,7 @@ marker 算法与 CLI 行为均先建立测试，再实现。
 
 - **类型**: 测试-骨架
 - **依赖**: 无
-- **状态**: [ ] 未完成
+- **状态**: [x] 已完成
 
 #### 任务描述
 为 `upsertMarkedBlock` 建立单元测试，确保 marker 外用户内容逐字保留。
@@ -117,9 +117,9 @@ marker 算法与 CLI 行为均先建立测试，再实现。
 6. 添加 marker 前后用户内容逐字保留的测试。
 
 #### 验收标准
-- [ ] 测试覆盖 missing、no marker、one marker、multi marker。
-- [ ] 保留内容断言使用严格字符串比较。
-- [ ] 多 marker 场景期望抛错或返回保护性错误。
+- [x] 测试覆盖 missing、no marker、one marker、multi marker。
+- [x] 保留内容断言使用严格字符串比较。
+- [x] 多 marker 场景期望抛错或返回保护性错误。
 
 #### 关联设计
 - spec.md 章节：1 新增需求、3.1 性能约束
@@ -131,7 +131,7 @@ marker 算法与 CLI 行为均先建立测试，再实现。
 
 - **类型**: 数据层
 - **依赖**: TASK-CODEX-01
-- **状态**: [ ] 未完成
+- **状态**: [x] 已完成
 
 #### 任务描述
 实现 marker block 插入、替换和多 marker 拒绝逻辑。
@@ -151,10 +151,10 @@ marker 算法与 CLI 行为均先建立测试，再实现。
 5. 返回新内容和状态 `created|inserted|updated`。
 
 #### 验收标准
-- [ ] marker 外内容逐字保留。
-- [ ] 非空文件追加 block 前有清晰换行边界。
-- [ ] 多 marker 不自动修复。
-- [ ] 返回状态可供 CLI 输出使用。
+- [x] marker 外内容逐字保留。
+- [x] 非空文件追加 block 前有清晰换行边界。
+- [x] 多 marker 不自动修复。
+- [x] 返回状态可供 CLI 输出使用。
 
 #### 关联设计
 - spec.md 章节：1 用户内容保护、2.1 错误码定义
@@ -166,7 +166,7 @@ marker 算法与 CLI 行为均先建立测试，再实现。
 
 - **类型**: 测试-骨架
 - **依赖**: 无
-- **状态**: [ ] 未完成
+- **状态**: [x] 已完成
 
 #### 任务描述
 创建模板测试，约束 `templates/codex/AGENTS.docsync.md` 可安全嵌入 marker block。
@@ -185,9 +185,9 @@ marker 算法与 CLI 行为均先建立测试，再实现。
 4. 断言模板不包含 token、私钥或用户本机路径。
 
 #### 验收标准
-- [ ] 模板缺失时测试失败。
-- [ ] 模板内容可作为 marker block 内部文本。
-- [ ] 敏感信息关键词被覆盖。
+- [x] 模板缺失时测试失败。
+- [x] 模板内容可作为 marker block 内部文本。
+- [x] 敏感信息关键词被覆盖。
 
 #### 关联设计
 - spec.md 章节：1 新增需求、5.2 数据安全
@@ -199,7 +199,7 @@ marker 算法与 CLI 行为均先建立测试，再实现。
 
 - **类型**: 配置
 - **依赖**: TASK-CODEX-03
-- **状态**: [ ] 未完成
+- **状态**: [x] 已完成
 
 #### 任务描述
 新增 DocSync Codex 规则模板，供 install/update 包装成 marker block 写入 AGENTS.md。
@@ -218,9 +218,9 @@ marker 算法与 CLI 行为均先建立测试，再实现。
 4. 避免写入敏感信息或本机路径。
 
 #### 验收标准
-- [ ] 模板测试通过。
-- [ ] 模板可被 `upsertMarkedBlock` 包装。
-- [ ] 模板不读取或泄露用户 AGENTS 内容。
+- [x] 模板测试通过。
+- [x] 模板可被 `upsertMarkedBlock` 包装。
+- [x] 模板不读取或泄露用户 AGENTS 内容。
 
 #### 关联设计
 - spec.md 章节：1 Codex 全局规则安装
@@ -232,7 +232,7 @@ marker 算法与 CLI 行为均先建立测试，再实现。
 
 - **类型**: 测试-骨架
 - **依赖**: 无
-- **状态**: [ ] 未完成
+- **状态**: [x] 已完成
 
 #### 任务描述
 创建 `docsync codex` CLI 测试，覆盖 install、update、path、dry-run、backup 与参数错误。
@@ -254,10 +254,10 @@ marker 算法与 CLI 行为均先建立测试，再实现。
 7. 添加 unknown subcommand 参数错误测试。
 
 #### 验收标准
-- [ ] 所有文件写入均发生在临时 HOME。
-- [ ] dry-run 不修改目标文件。
-- [ ] backup 场景期望生成备份文件。
-- [ ] 成功输出包含 target、status、preservedUserContent。
+- [x] 所有文件写入均发生在临时 HOME。
+- [x] dry-run 不修改目标文件。
+- [x] backup 场景期望生成备份文件。
+- [x] 成功输出包含 target、status、preservedUserContent。
 
 #### 关联设计
 - spec.md 章节：2.1 请求参数、2.1 响应结构
@@ -269,7 +269,7 @@ marker 算法与 CLI 行为均先建立测试，再实现。
 
 - **类型**: 接口层
 - **依赖**: TASK-CODEX-02, TASK-CODEX-04, TASK-CODEX-05
-- **状态**: [ ] 未完成
+- **状态**: [x] 已完成
 
 #### 任务描述
 实现 `docsync codex <install|update|path>`，并将 marker upsert、模板读取和目标路径解析串联。
@@ -293,12 +293,12 @@ marker 算法与 CLI 行为均先建立测试，再实现。
 7. 统一输出状态与错误码。
 
 #### 验收标准
-- [ ] 目标缺失时创建 AGENTS.md。
-- [ ] 目标存在无 marker 时保留原文并追加 block。
-- [ ] 已有一对 marker 时只替换 block 内容。
-- [ ] 多 marker 时拒绝并提示人工清理。
-- [ ] `docsync codex path` 只输出解析路径。
-- [ ] `--dry-run` 不写文件。
+- [x] 目标缺失时创建 AGENTS.md。
+- [x] 目标存在无 marker 时保留原文并追加 block。
+- [x] 已有一对 marker 时只替换 block 内容。
+- [x] 多 marker 时拒绝并提示人工清理。
+- [x] `docsync codex path` 只输出解析路径。
+- [x] `--dry-run` 不写文件。
 
 #### 关联设计
 - spec.md 章节：1 新增需求、2.1 错误码定义
@@ -310,7 +310,7 @@ marker 算法与 CLI 行为均先建立测试，再实现。
 
 - **类型**: 测试-验证
 - **依赖**: TASK-CODEX-02, TASK-CODEX-04, TASK-CODEX-06
-- **状态**: [ ] 未完成
+- **状态**: [x] 已完成
 
 #### 任务描述
 运行并补齐 Codex 相关测试，确认 marker 管理不会破坏用户内容。
@@ -331,10 +331,10 @@ marker 算法与 CLI 行为均先建立测试，再实现。
 4. 记录验证命令和结果。
 
 #### 验收标准
-- [ ] marker 算法测试通过。
-- [ ] 模板测试通过。
-- [ ] codex CLI 测试通过。
-- [ ] 无真实 home 目录污染。
+- [x] marker 算法测试通过。
+- [x] 模板测试通过。
+- [x] codex CLI 测试通过。
+- [x] 无真实 home 目录污染。
 
 #### 关联设计
 - spec.md 章节：全部新增需求
@@ -364,9 +364,9 @@ marker 算法与 CLI 行为均先建立测试，再实现。
 
 ### 4.3 手动验证清单
 
-- [ ] 确认 marker 常量完全匹配 spec。
-- [ ] 确认命令不输出 AGENTS.md 原文。
-- [ ] 确认 dry-run 输出动作计划但不写文件。
+- [x] 确认 marker 常量完全匹配 spec。
+- [x] 确认命令不输出 AGENTS.md 原文。
+- [x] 确认 dry-run 输出动作计划但不写文件。
 
 ---
 
@@ -423,9 +423,9 @@ marker 算法与 CLI 行为均先建立测试，再实现。
 
 ### 7.3 文档更新
 
-- [ ] README 中补充 `docsync codex` 用法。
-- [ ] AGENTS 中补充 marker block 保护约束。
-- [ ] CHANGELOG 中记录 Codex 规则管理能力。
+- [x] README 中补充 `docsync codex` 用法。
+- [x] AGENTS 中补充 marker block 保护约束。
+- [x] CHANGELOG 中记录 Codex 规则管理能力。
 
 ---
 

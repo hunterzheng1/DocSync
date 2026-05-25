@@ -98,7 +98,7 @@
 
 - **类型**: 测试-骨架
 - **依赖**: 无
-- **状态**: [ ] 未完成
+- **状态**: [x] 已完成
 
 #### 任务描述
 创建 package manifest 测试，约束 npm 包名、版本、ESM、bin、engines、files 和 scripts。
@@ -119,9 +119,9 @@
 6. 断言 files 白名单包含允许的目录和文档。
 
 #### 验收标准
-- [ ] package 缺失时测试失败。
-- [ ] 元数据字段逐项严格断言。
-- [ ] files 白名单不包含 test、coverage、env、repomix 输出。
+- [x] package 缺失时测试失败。
+- [x] 元数据字段逐项严格断言。
+- [x] files 白名单不包含 test、coverage、env、repomix 输出。
 
 #### 关联设计
 - spec.md 章节：1 npm 包发布元数据
@@ -133,7 +133,7 @@
 
 - **类型**: 配置
 - **依赖**: TASK-PKG-01
-- **状态**: [ ] 未完成
+- **状态**: [x] 已完成
 
 #### 任务描述
 新增 npm package manifest，提供可发布包的元数据、bin、files、engines 和验证脚本。
@@ -154,9 +154,9 @@
 6. 补齐 repository、bugs、homepage 元数据。
 
 #### 验收标准
-- [ ] package 元数据测试通过。
-- [ ] `files` 只包含 `bin`、`src`、`templates`、README、LICENSE、CHANGELOG 等允许项。
-- [ ] package 中不包含自动 publish 或 git commit 脚本。
+- [x] package 元数据测试通过。
+- [x] `files` 只包含 `bin`、`src`、`templates`、README、LICENSE、CHANGELOG 等允许项。
+- [x] package 中不包含自动 publish 或 git commit 脚本。
 
 #### 关联设计
 - spec.md 章节：1 npm 包发布元数据、1 测试与验收命令
@@ -168,7 +168,7 @@
 
 - **类型**: 测试-骨架
 - **依赖**: 无
-- **状态**: [ ] 未完成
+- **状态**: [x] 已完成
 
 #### 任务描述
 创建 README、AGENTS、CHANGELOG、LICENSE 内容检查，确保文档章节满足契约。
@@ -187,9 +187,9 @@
 4. 添加 LICENSE 为 MIT 且包含 `2026 Hunter Zheng` 的检查。
 
 #### 验收标准
-- [ ] README 缺少安装、快速开始、命令列表、安全说明或 License 时测试失败。
-- [ ] AGENTS 缺少常用命令、规则、验证要求或安全编辑约束时测试失败。
-- [ ] LICENSE 缺少 MIT 或版权年份时测试失败。
+- [x] README 缺少安装、快速开始、命令列表、安全说明或 License 时测试失败。
+- [x] AGENTS 缺少常用命令、规则、验证要求或安全编辑约束时测试失败。
+- [x] LICENSE 缺少 MIT 或版权年份时测试失败。
 
 #### 关联设计
 - spec.md 章节：1 项目文档完备
@@ -201,7 +201,7 @@
 
 - **类型**: 文档
 - **依赖**: TASK-PKG-03
-- **状态**: [ ] 未完成
+- **状态**: [x] 已完成
 
 #### 任务描述
 补齐用户文档、agent 维护说明、变更记录和 MIT License。
@@ -223,10 +223,10 @@
 4. LICENSE 写入 MIT License 文本与 `2026 Hunter Zheng`。
 
 #### 验收标准
-- [ ] 文档内容测试通过。
-- [ ] README 明确首次 scoped public 发布需人工执行 `npm publish --access public`。
-- [ ] AGENTS 明确不得自动发布、提交或推送。
-- [ ] LICENSE 使用 MIT 文本。
+- [x] 文档内容测试通过。
+- [x] README 明确首次 scoped public 发布需人工执行 `npm publish --access public`。
+- [x] AGENTS 明确不得自动发布、提交或推送。
+- [x] LICENSE 使用 MIT 文本。
 
 #### 关联设计
 - spec.md 章节：1 项目文档完备、5.3 审计要求
@@ -238,7 +238,7 @@
 
 - **类型**: 测试-骨架
 - **依赖**: 无
-- **状态**: [ ] 未完成
+- **状态**: [x] 已完成
 
 #### 任务描述
 创建发布安全检查，防止敏感文件、生成产物和测试临时目录进入发布包候选。
@@ -257,9 +257,9 @@
 4. 断言 `.env`、`.env.*`、`*.pem`、`*.key`、`*.p12`、`*.jks`、`repomix-output.xml` 不在发布白名单。
 
 #### 验收标准
-- [ ] 忽略配置缺失敏感模式时测试失败。
-- [ ] files 白名单包含敏感或生成文件时测试失败。
-- [ ] 测试不需要访问网络或 npm registry。
+- [x] 忽略配置缺失敏感模式时测试失败。
+- [x] files 白名单包含敏感或生成文件时测试失败。
+- [x] 测试不需要访问网络或 npm registry。
 
 #### 关联设计
 - spec.md 章节：1 发布安全检查、5.2 数据安全
@@ -271,7 +271,7 @@
 
 - **类型**: 配置
 - **依赖**: TASK-PKG-05
-- **状态**: [ ] 未完成
+- **状态**: [x] 已完成
 
 #### 任务描述
 补齐 `.gitignore` 和 `.npmignore`，与 `package.files` 共同阻止敏感和生成文件进入仓库或 npm 包。
@@ -292,9 +292,9 @@
 4. 保留既有 ignore 内容，不删除用户已有规则。
 
 #### 验收标准
-- [ ] 发布安全测试通过。
-- [ ] `.npmignore` 与 `package.files` 不冲突。
-- [ ] 忽略规则覆盖 spec 中所有 forbidden patterns。
+- [x] 发布安全测试通过。
+- [x] `.npmignore` 与 `package.files` 不冲突。
+- [x] 忽略规则覆盖 spec 中所有 forbidden patterns。
 
 #### 关联设计
 - spec.md 章节：1 发布文件白名单、1 发布安全检查
@@ -306,7 +306,7 @@
 
 - **类型**: 配置
 - **依赖**: TASK-PKG-02, TASK-PKG-04, TASK-PKG-06
-- **状态**: [ ] 未完成
+- **状态**: [x] 已完成
 
 #### 任务描述
 确保 package scripts 与文档中的发布前验证流程一致，并强调 pack dry-run 需要人工审查。
@@ -328,9 +328,9 @@
 5. 明确 pack 输出需要人工检查且不得自动 publish。
 
 #### 验收标准
-- [ ] package scripts 与文档命令一致。
-- [ ] 文档明确不自动发布、不自动提交。
-- [ ] pack dry-run 说明包含 forbidden patterns 人工检查。
+- [x] package scripts 与文档命令一致。
+- [x] 文档明确不自动发布、不自动提交。
+- [x] pack dry-run 说明包含 forbidden patterns 人工检查。
 
 #### 关联设计
 - spec.md 章节：1 测试与验收命令、5.3 审计要求
@@ -342,7 +342,7 @@
 
 - **类型**: 测试-验证
 - **依赖**: TASK-PKG-07
-- **状态**: [ ] 未完成
+- **状态**: [x] 已完成
 
 #### 任务描述
 运行发布就绪相关测试和本地验证命令，人工检查 pack dry-run 输出。
@@ -365,11 +365,11 @@
 5. 人工检查 pack 输出不包含敏感文件、生成文件或测试临时目录。
 
 #### 验收标准
-- [ ] `npm test` 通过。
-- [ ] `npm run lint` 通过。
-- [ ] `node bin/docsync.mjs doctor` 输出可用于环境诊断。
-- [ ] `npm run pack:dry` 可运行且输出文件列表。
-- [ ] pack 输出经人工确认不含 forbidden patterns。
+- [x] `npm test` 通过。
+- [x] `npm run lint` 通过。
+- [x] `node bin/docsync.mjs doctor` 输出可用于环境诊断。
+- [x] `npm run pack:dry` 可运行且输出文件列表。
+- [x] pack 输出经人工确认不含 forbidden patterns。
 
 #### 关联设计
 - spec.md 章节：全部新增需求
@@ -399,9 +399,9 @@
 
 ### 4.3 手动验证清单
 
-- [ ] 检查 package scope 与包名在发布前可用。
-- [ ] 检查 pack dry-run 输出不含 `.env`、密钥、证书、token、`repomix-output.xml`。
-- [ ] 确认没有自动执行 npm publish、git commit、git push。
+- [x] 检查 package scope 与包名在发布前可用。
+- [x] 检查 pack dry-run 输出不含 `.env`、密钥、证书、token、`repomix-output.xml`。
+- [x] 确认没有自动执行 npm publish、git commit、git push。
 
 ---
 
@@ -458,10 +458,10 @@
 
 ### 7.3 文档更新
 
-- [ ] `README.md`
-- [ ] `AGENTS.md`
-- [ ] `CHANGELOG.md`
-- [ ] `LICENSE`
+- [x] `README.md`
+- [x] `AGENTS.md`
+- [x] `CHANGELOG.md`
+- [x] `LICENSE`
 
 ---
 

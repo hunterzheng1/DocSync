@@ -72,7 +72,7 @@
 
 - **类型**: 测试-骨架
 - **依赖**: 无
-- **状态**: [ ] 未完成
+- **状态**: [x] 已完成
 
 #### 任务描述
 创建外部命令检测、执行和 git 状态辅助的测试骨架。
@@ -90,8 +90,8 @@
 3. 为 git 仓库检测添加非 git 目录测试。
 
 #### 验收标准
-- [ ] 覆盖命令缺失不抛出进程崩溃。
-- [ ] 覆盖非 git 仓库降级。
+- [x] 覆盖命令缺失不抛出进程崩溃。
+- [x] 覆盖非 git 仓库降级。
 
 #### 关联设计
 - spec.md 章节：Repomix 上下文生成、git 状态输出
@@ -103,7 +103,7 @@
 
 - **类型**: 配置
 - **依赖**: TASK-PREP-01
-- **状态**: [ ] 未完成
+- **状态**: [x] 已完成
 
 #### 任务描述
 实现命令检测执行、git 状态辅助和步骤日志输出。
@@ -123,8 +123,8 @@
 3. 实现步骤状态输出辅助。
 
 #### 验收标准
-- [ ] `hasCommand` 对缺失命令返回 false。
-- [ ] 非 git 仓库返回 skipped 状态。
+- [x] `hasCommand` 对缺失命令返回 false。
+- [x] 非 git 仓库返回 skipped 状态。
 
 #### 关联设计
 - spec.md 章节：git 状态输出、Markdown 格式修复
@@ -136,7 +136,7 @@
 
 - **类型**: 测试-骨架
 - **依赖**: 无
-- **状态**: [ ] 未完成
+- **状态**: [x] 已完成
 
 #### 任务描述
 创建 `test/prep.test.mjs`，覆盖默认流程、`--no-init`、`--compress` 和 `--dry-run`。
@@ -153,8 +153,8 @@
 3. 添加 no-init/compress/dry-run 断言。
 
 #### 验收标准
-- [ ] 默认流程顺序为 init → git → repomix → lint。
-- [ ] compress 触发 `repomix --compress`。
+- [x] 默认流程顺序为 init → git → repomix → lint。
+- [x] compress 触发 `repomix --compress`。
 
 #### 关联设计
 - spec.md 章节：prep 工作流编排
@@ -166,7 +166,7 @@
 
 - **类型**: 接口层
 - **依赖**: TASK-PREP-03, TASK-PREP-02
-- **状态**: [ ] 未完成
+- **状态**: [x] 已完成
 
 #### 任务描述
 实现 `src/commands/prep.mjs` 的流程编排和状态汇总。
@@ -188,9 +188,9 @@
 5. 按 noLint 检测并运行 markdownlint。
 
 #### 验收标准
-- [ ] Repomix 缺失时 exit 1 并提示安装。
-- [ ] markdownlint 缺失时不失败。
-- [ ] dry-run 不执行写入命令。
+- [x] Repomix 缺失时 exit 1 并提示安装。
+- [x] markdownlint 缺失时不失败。
+- [x] dry-run 不执行写入命令。
 
 #### 关联设计
 - spec.md 章节：全部需求项
@@ -202,7 +202,7 @@
 
 - **类型**: 测试-骨架
 - **依赖**: 无
-- **状态**: [ ] 未完成
+- **状态**: [x] 已完成
 
 #### 任务描述
 创建通过 bin 调用 `docsync prep` 的集成式测试骨架。
@@ -219,8 +219,8 @@
 3. 添加缺失 repomix 失败用例。
 
 #### 验收标准
-- [ ] CLI 层能接收 no-init/no-lint/compress。
-- [ ] 缺失 repomix 的错误信息可断言。
+- [x] CLI 层能接收 no-init/no-lint/compress。
+- [x] 缺失 repomix 的错误信息可断言。
 
 #### 关联设计
 - spec.md 章节：接口定义、错误码定义
@@ -232,7 +232,7 @@
 
 - **类型**: 接口层
 - **依赖**: TASK-PREP-05, TASK-PREP-04
-- **状态**: [ ] 未完成
+- **状态**: [x] 已完成
 
 #### 任务描述
 将 `runPrep` 接入 `src/cli.mjs` 的 `prep` 命令，并确认参数透传。
@@ -251,8 +251,8 @@
 3. 保证 compress/no-lint/no-init/dry-run 选项传递。
 
 #### 验收标准
-- [ ] `docsync prep --compress` 调用 prep handler。
-- [ ] `docsync prep --no-init --no-lint` 选项可传入。
+- [x] `docsync prep --compress` 调用 prep handler。
+- [x] `docsync prep --no-init --no-lint` 选项可传入。
 
 #### 关联设计
 - spec.md 章节：prep 工作流编排
@@ -264,7 +264,7 @@
 
 - **类型**: 测试-验证
 - **依赖**: TASK-PREP-02, TASK-PREP-04, TASK-PREP-06
-- **状态**: [ ] 未完成
+- **状态**: [x] 已完成
 
 #### 任务描述
 运行 prep 相关测试和 dry-run 手动验证。
@@ -281,8 +281,8 @@
 3. 检查输出包含 init/git/repomix/lint 计划。
 
 #### 验收标准
-- [ ] 所有 prep 相关测试通过。
-- [ ] dry-run 不生成 `repomix-output.xml`。
+- [x] 所有 prep 相关测试通过。
+- [x] dry-run 不生成 `repomix-output.xml`。
 
 #### 关联设计
 - spec.md 章节：全部需求项
@@ -309,9 +309,9 @@
 
 ### 4.3 手动验证清单
 
-- [ ] `node bin/docsync.mjs prep --dry-run`
-- [ ] `node bin/docsync.mjs prep --compress --dry-run`
-- [ ] `node bin/docsync.mjs prep --no-init --no-lint --dry-run`
+- [x] `node bin/docsync.mjs prep --dry-run`
+- [x] `node bin/docsync.mjs prep --compress --dry-run`
+- [x] `node bin/docsync.mjs prep --no-init --no-lint --dry-run`
 
 ---
 
@@ -370,9 +370,9 @@
 
 ### 7.3 文档更新
 
-- [ ] 本 capability 不直接更新 README。
-- [ ] 本 capability 不直接更新接口文档。
-- [ ] 本 capability 不直接更新变更日志。
+- [x] 本 capability 不直接更新 README。
+- [x] 本 capability 不直接更新接口文档。
+- [x] 本 capability 不直接更新变更日志。
 
 ---
 

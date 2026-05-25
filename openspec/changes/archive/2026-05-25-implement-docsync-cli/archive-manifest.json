@@ -1,0 +1,50 @@
+{
+  "change": "implement-docsync-cli",
+  "archived_at": "2026-05-25T12:27:20.949Z",
+  "reason": "变更已完成实施",
+  "method": "skywalk-full-spec-archive",
+  "source_path": "openspec/changes/implement-docsync-cli",
+  "archive_path": "openspec/changes/archive/2026-05-25-implement-docsync-cli",
+  "copied_specs": [
+    {
+      "capability": "ai-workflow-orchestration",
+      "source": "openspec/changes/archive/2026-05-25-implement-docsync-cli/specs/ai-workflow-orchestration/spec.md",
+      "target": "openspec/specs/ai-workflow-orchestration/spec.md"
+    },
+    {
+      "capability": "claude-skill-management",
+      "source": "openspec/changes/archive/2026-05-25-implement-docsync-cli/specs/claude-skill-management/spec.md",
+      "target": "openspec/specs/claude-skill-management/spec.md"
+    },
+    {
+      "capability": "cli-command-routing",
+      "source": "openspec/changes/archive/2026-05-25-implement-docsync-cli/specs/cli-command-routing/spec.md",
+      "target": "openspec/specs/cli-command-routing/spec.md"
+    },
+    {
+      "capability": "codex-rule-management",
+      "source": "openspec/changes/archive/2026-05-25-implement-docsync-cli/specs/codex-rule-management/spec.md",
+      "target": "openspec/specs/codex-rule-management/spec.md"
+    },
+    {
+      "capability": "context-preparation",
+      "source": "openspec/changes/archive/2026-05-25-implement-docsync-cli/specs/context-preparation/spec.md",
+      "target": "openspec/specs/context-preparation/spec.md"
+    },
+    {
+      "capability": "environment-diagnostics",
+      "source": "openspec/changes/archive/2026-05-25-implement-docsync-cli/specs/environment-diagnostics/spec.md",
+      "target": "openspec/specs/environment-diagnostics/spec.md"
+    },
+    {
+      "capability": "package-docs-release-readiness",
+      "source": "openspec/changes/archive/2026-05-25-implement-docsync-cli/specs/package-docs-release-readiness/spec.md",
+      "target": "openspec/specs/package-docs-release-readiness/spec.md"
+    },
+    {
+      "capability": "project-initialization",
+      "source": "openspec/changes/archive/2026-05-25-implement-docsync-cli/specs/project-initialization/spec.md",
+      "target": "openspec/specs/project-initialization/spec.md"
+    }
+  ]
+}

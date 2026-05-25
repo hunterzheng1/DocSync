@@ -71,7 +71,7 @@
 
 - **类型**: 测试-骨架
 - **依赖**: 无
-- **状态**: [ ] 未完成
+- **状态**: [x] 已完成
 
 #### 任务描述
 创建 `test/prompt.test.mjs` 覆盖默认 prompt、docs 范围和 extra 追加。
@@ -88,8 +88,8 @@
 3. 断言 docs/extra 参数影响输出。
 
 #### 验收标准
-- [ ] 覆盖默认 prompt 硬规则。
-- [ ] 覆盖 `--docs` 和 `--extra`。
+- [x] 覆盖默认 prompt 硬规则。
+- [x] 覆盖 `--docs` 和 `--extra`。
 
 #### 关联设计
 - spec.md 章节：AI prompt 构建
@@ -101,7 +101,7 @@
 
 - **类型**: 接口层
 - **依赖**: TASK-AI-01
-- **状态**: [ ] 未完成
+- **状态**: [x] 已完成
 
 #### 任务描述
 实现 `src/utils/prompt.mjs`，构建安全、事实导向的文档同步 prompt。
@@ -118,8 +118,8 @@
 3. 将 extra 原样追加到 prompt 末尾。
 
 #### 验收标准
-- [ ] 硬规则不可被 extra 覆盖。
-- [ ] prompt 长度超过上限时提示。
+- [x] 硬规则不可被 extra 覆盖。
+- [x] prompt 长度超过上限时提示。
 
 #### 关联设计
 - spec.md 章节：AI prompt 构建
@@ -131,7 +131,7 @@
 
 - **类型**: 测试-骨架
 - **依赖**: 无
-- **状态**: [ ] 未完成
+- **状态**: [x] 已完成
 
 #### 任务描述
 创建 `test/ai.test.mjs` 覆盖 prep 前置、Claude 存在和缺失 fallback。
@@ -148,8 +148,8 @@
 3. 断言 Claude 缺失时打印 prompt 且 exit 0。
 
 #### 验收标准
-- [ ] prep 失败时不调用 Claude。
-- [ ] Claude 缺失时 fallback 打印 prompt。
+- [x] prep 失败时不调用 Claude。
+- [x] Claude 缺失时 fallback 打印 prompt。
 
 #### 关联设计
 - spec.md 章节：交互 AI 工作流
@@ -161,7 +161,7 @@
 
 - **类型**: 接口层
 - **依赖**: TASK-AI-03, TASK-AI-02
-- **状态**: [ ] 未完成
+- **状态**: [x] 已完成
 
 #### 任务描述
 实现 `src/commands/ai.mjs`，编排 prep、prompt 和 Claude 启动/fallback。
@@ -181,8 +181,8 @@
 4. Claude 可用时调用 `claude <prompt>`，缺失时打印 prompt。
 
 #### 验收标准
-- [ ] prep 失败会中止。
-- [ ] Claude 缺失时 exit 0。
+- [x] prep 失败会中止。
+- [x] Claude 缺失时 exit 0。
 
 #### 关联设计
 - spec.md 章节：交互 AI 工作流
@@ -194,7 +194,7 @@
 
 - **类型**: 测试-骨架
 - **依赖**: 无
-- **状态**: [ ] 未完成
+- **状态**: [x] 已完成
 
 #### 任务描述
 创建 `test/auto.test.mjs` 覆盖 dry-run、allowedTools 和危险命令限制。
@@ -211,8 +211,8 @@
 3. 断言 auto 输出实验性提示。
 
 #### 验收标准
-- [ ] dry-run 只打印命令计划。
-- [ ] 危险工具不在白名单中。
+- [x] dry-run 只打印命令计划。
+- [x] 危险工具不在白名单中。
 
 #### 关联设计
 - spec.md 章节：自动 AI 工作流
@@ -224,7 +224,7 @@
 
 - **类型**: 接口层
 - **依赖**: TASK-AI-05, TASK-AI-02
-- **状态**: [ ] 未完成
+- **状态**: [x] 已完成
 
 #### 任务描述
 实现 `src/commands/auto.mjs` 并在 CLI 路由中接入 `ai` 和 `auto`。
@@ -244,8 +244,8 @@
 4. 在 CLI 路由中接入 `ai` 和 `auto`。
 
 #### 验收标准
-- [ ] auto 命令可 dry-run。
-- [ ] CLI 路由识别 ai/auto。
+- [x] auto 命令可 dry-run。
+- [x] CLI 路由识别 ai/auto。
 
 #### 关联设计
 - spec.md 章节：自动 AI 工作流
@@ -257,7 +257,7 @@
 
 - **类型**: 测试-验证
 - **依赖**: TASK-AI-02, TASK-AI-04, TASK-AI-06
-- **状态**: [ ] 未完成
+- **状态**: [x] 已完成
 
 #### 任务描述
 运行 prompt、ai、auto 测试和 dry-run 手动验证。
@@ -276,8 +276,8 @@
 3. 检查输出包含 allowedTools 和实验性提示。
 
 #### 验收标准
-- [ ] 相关测试通过。
-- [ ] auto dry-run 不启动 Claude。
+- [x] 相关测试通过。
+- [x] auto dry-run 不启动 Claude。
 
 #### 关联设计
 - spec.md 章节：全部需求项
@@ -304,8 +304,8 @@
 
 ### 4.3 手动验证清单
 
-- [ ] `node bin/docsync.mjs auto --dry-run`
-- [ ] `node bin/docsync.mjs ai --docs readme,agents --extra "check commands"`
+- [x] `node bin/docsync.mjs auto --dry-run`
+- [x] `node bin/docsync.mjs ai --docs readme,agents --extra "check commands"`
 
 ---
 
@@ -361,9 +361,9 @@
 
 ### 7.3 文档更新
 
-- [ ] 本 capability 不直接更新 README。
-- [ ] 本 capability 不直接更新接口文档。
-- [ ] 本 capability 不直接更新变更日志。
+- [x] 本 capability 不直接更新 README。
+- [x] 本 capability 不直接更新接口文档。
+- [x] 本 capability 不直接更新变更日志。
 
 ---
 
