@@ -6,7 +6,7 @@
 
 DocSync 是一个可通过 npm 发布的 CLI 工具，用于协调 Repomix、markdownlint、Claude Skill、Codex 规则和 AI 文档同步工作流。用户可在任意项目中通过 `docsync` 命令完成环境检查、上下文准备、格式修复和文档同步。
 
-- **包名**：`@hunterzheng1/docsync`
+- **包名**：`@hunterzheng/docsync`
 - **运行环境**：Node.js >= 18，ESM 模块格式
 - **CLI 入口**：`bin/docsync.mjs`
 - **命令分发**：`src/cli.mjs`

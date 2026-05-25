@@ -3,8 +3,8 @@
 > 项目目标：实现一个可通过 npm 发布和迭代的跨项目文档同步 CLI，用于一键维护 `README.md`、`AGENTS.md`、`CLAUDE.md` 等仓库说明文件。  
 > 默认 GitHub 用户名：`hunterzheng1`  
 > 默认 GitHub 仓库：`hunterzheng1/docsync`  
-> 默认 npm 包名：`@hunterzheng1/docsync`  
-> 注意：如果 npm 账号或 scope 不是 `hunterzheng1`，发布前将包名改为 `@<npm-username>/docsync` 或其他未被占用名称。
+> 默认 npm 包名：`@hunterzheng/docsync`  
+> 注意：如果 npm 账号或 scope 不是 `hunterzheng`，发布前将包名改为 `@<npm-username>/docsync` 或其他未被占用名称。
 
 ---
 
@@ -34,7 +34,7 @@ docsync ai
 或者无需安装：
 
 ```bash
-npx -y @hunterzheng1/docsync@latest ai
+npx -y @hunterzheng/docsync@latest ai
 ```
 
 ---
@@ -179,7 +179,7 @@ https://github.com/hunterzheng1/docsync
 默认：
 
 ```text
-@hunterzheng1/docsync
+@hunterzheng/docsync
 ```
 
 如果 npm 不支持该 scope 或该 scope 不属于当前登录账号，则改为：
@@ -532,7 +532,7 @@ docsync/
 
 ```json
 {
-  "name": "@hunterzheng1/docsync",
+  "name": "@hunterzheng/docsync",
   "version": "0.1.0",
   "description": "A lightweight CLI to sync README.md, AGENTS.md, and CLAUDE.md using Repomix and AI coding agents.",
   "type": "module",
@@ -581,7 +581,7 @@ docsync/
 
 Codex 注意：
 
-- 如果 npm scope 不是 `@hunterzheng1`，实现前需要把 `name` 改成真实 npm scope。
+- 如果 npm scope 不是 `@hunterzheng`，实现前需要把 `name` 改成真实 npm scope。
 - `bin/docsync.mjs` 必须有 shebang：
 
   ```js
@@ -1236,7 +1236,7 @@ A lightweight CLI to sync README.md, AGENTS.md, and CLAUDE.md using Repomix and 
 ## Install
 
 ```bash
-npm i -g @hunterzheng1/docsync
+npm i -g @hunterzheng/docsync
 ```
 
 ## Quick start
@@ -1625,7 +1625,7 @@ npm whoami
 检查：
 
 ```bash
-npm view @hunterzheng1/docsync
+npm view @hunterzheng/docsync
 ```
 
 如果不存在，会返回 404 类信息，说明可用。
@@ -1657,7 +1657,7 @@ npm publish --access public
 ### 23.5 安装验证
 
 ```bash
-npm i -g @hunterzheng1/docsync
+npm i -g @hunterzheng/docsync
 docsync version
 docsync doctor
 ```
@@ -1665,8 +1665,8 @@ docsync doctor
 如果使用 npx：
 
 ```bash
-npx -y @hunterzheng1/docsync@latest version
-npx -y @hunterzheng1/docsync@latest doctor
+npx -y @hunterzheng/docsync@latest version
+npx -y @hunterzheng/docsync@latest doctor
 ```
 
 ### 23.6 后续发版
@@ -1704,7 +1704,7 @@ git push --follow-tags
 全局安装：
 
 ```bash
-npm i -g repomix markdownlint-cli2 @hunterzheng1/docsync
+npm i -g repomix markdownlint-cli2 @hunterzheng/docsync
 ```
 
 安装 Claude Skill：
@@ -1749,7 +1749,7 @@ docsync auto
 ### 24.3 不全局安装
 
 ```bash
-npx -y @hunterzheng1/docsync@latest ai
+npx -y @hunterzheng/docsync@latest ai
 ```
 
 ### 24.4 项目内推荐提交内容
@@ -1776,7 +1776,7 @@ repomix-output.xml
 ### 25.1 第一次在新机器上
 
 ```bash
-npm i -g repomix markdownlint-cli2 @hunterzheng1/docsync
+npm i -g repomix markdownlint-cli2 @hunterzheng/docsync
 docsync skill install
 docsync codex install
 docsync doctor
@@ -1885,8 +1885,8 @@ docsync doctor
 发布后：
 
 ```bash
-npx -y @hunterzheng1/docsync@latest version
-npx -y @hunterzheng1/docsync@latest doctor
+npx -y @hunterzheng/docsync@latest version
+npx -y @hunterzheng/docsync@latest doctor
 ```
 
 ### 27.4 项目使用验收
@@ -2032,7 +2032,7 @@ Codex 可补完整 MIT License 文本。
 
 重要约束：
 1. GitHub 用户名是 hunterzheng1，默认仓库是 hunterzheng1/docsync。
-2. 默认 npm 包名先使用 @hunterzheng1/docsync；如果实际 npm scope 不可用，保留 TODO 提醒用户修改。
+2. 默认 npm 包名先使用 @hunterzheng/docsync；如果实际 npm scope 不可用，保留 TODO 提醒用户修改。
 3. 使用 Node.js >= 18，ESM。
 4. CLI 命令名必须是 docsync。
 5. 第一版不要引入不必要依赖。
@@ -2064,7 +2064,7 @@ docsync ai
 新机器初始化：
 
 ```bash
-npm i -g repomix markdownlint-cli2 @hunterzheng1/docsync
+npm i -g repomix markdownlint-cli2 @hunterzheng/docsync
 docsync skill install
 docsync codex install
 docsync doctor
@@ -2073,7 +2073,7 @@ docsync doctor
 不想全局安装：
 
 ```bash
-npx -y @hunterzheng1/docsync@latest ai
+npx -y @hunterzheng/docsync@latest ai
 ```
 
 ---

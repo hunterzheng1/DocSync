@@ -4,7 +4,7 @@
 
 ## 项目是什么
 
-DocSync 是一个可通过 npm 发布的 CLI 工具（`@hunterzheng1/docsync`），用于协调 Repomix、markdownlint、Claude Skill、Codex 规则和 AI 文档同步工作流。
+DocSync 是一个可通过 npm 发布的 CLI 工具（`@hunterzheng/docsync`），用于协调 Repomix、markdownlint、Claude Skill、Codex 规则和 AI 文档同步工作流。
 
 ## CLI 命令契约
 

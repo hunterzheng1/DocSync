@@ -1,17 +1,17 @@
-# @hunterzheng1/docsync
+# @hunterzheng/docsync
 
 可复用的 npm CLI，用于文档同步工作流：Repomix 上下文、markdownlint、Claude Skill、Codex 规则管理和 AI 文档同步。
 
 ## 安装
 
 ```bash
-npm i -g @hunterzheng1/docsync
+npm i -g @hunterzheng/docsync
 ```
 
 或通过 `npx` 临时使用：
 
 ```bash
-npx @hunterzheng1/docsync help
+npx @hunterzheng/docsync help
 ```
 
 ## 快速开始

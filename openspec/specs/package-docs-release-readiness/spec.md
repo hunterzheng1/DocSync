@@ -18,7 +18,7 @@
 
 ##### 场景：包元数据完整
 - **当** 用户检查 `package.json`
-- **预期** 系统必须包含 `name="@hunterzheng1/docsync"`、`version="0.1.0"`、`type="module"`、`bin.docsync="bin/docsync.mjs"`、`engines.node=">=18"`
+- **预期** 系统必须包含 `name="@hunterzheng/docsync"`、`version="0.1.0"`、`type="module"`、`bin.docsync="bin/docsync.mjs"`、`engines.node=">=18"`
 
 ##### 场景：发布文件白名单
 - **当** 用户运行 `npm pack --dry-run`
@@ -88,7 +88,7 @@
 | 参数名 | 类型 | 必填 | 说明 | 示例值 | 约束条件 |
 |-------|------|------|------|--------|----------|
 | npm script | string | 是 | 发布前验证脚本 | `npm run pack:dry` | 允许值：`test/lint/pack:dry/release:patch` |
-| package name | string | 是 | npm 包名 | `@hunterzheng1/docsync` | 若 scope 不可用，发布前必须人工调整 |
+| package name | string | 是 | npm 包名 | `@hunterzheng/docsync` | 若 scope 不可用，发布前必须人工调整 |
 | package version | semver | 是 | npm 版本 | `0.1.0` | 同一 name+version 不得重复发布 |
 | files | string[] | 是 | npm files 白名单 | `["bin","src","templates"]` | 不得包含生成文件和敏感文件 |
 
@@ -219,7 +219,7 @@ The system MUST provide npm package metadata required to publish the DocSync CLI
 
 #### Scenario: Package metadata is complete
 - **WHEN** the user inspects `package.json`
-- **THEN** it includes `name="@hunterzheng1/docsync"`, `version="0.1.0"`, `type="module"`, `bin.docsync="bin/docsync.mjs"`, `engines.node=">=18"`, repository, bugs, homepage, and license metadata
+- **THEN** it includes `name="@hunterzheng/docsync"`, `version="0.1.0"`, `type="module"`, `bin.docsync="bin/docsync.mjs"`, `engines.node=">=18"`, repository, bugs, homepage, and license metadata
 
 #### Scenario: Published file whitelist is constrained
 - **WHEN** the user runs `npm pack --dry-run`
