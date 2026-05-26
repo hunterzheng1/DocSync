@@ -3,7 +3,7 @@ import { spawn } from 'node:child_process';
 
 export function hasCommand(command) {
   try {
-    execSync(`which ${command}`, { stdio: 'ignore' }).toString().trim();
+    execSync(`which ${command}`, { stdio: 'pipe' });
     return true;
   } catch {
     return false;
