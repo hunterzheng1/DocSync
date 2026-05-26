@@ -42,6 +42,26 @@ describe('claude skill template', () => {
     assert.ok(content.includes('硬性规则') || content.includes('硬规则'), 'should have hard rules section');
   });
 
+  it('SKILL.md does not contain CLI invocation commands', () => {
+    const content = readFileSync(SKILL_TEMPLATE, 'utf8');
+    // Should not guide users to run docsync CLI commands — AI uses own tools instead
+    assert.ok(!content.includes('Bash') || !content.includes('docsync doctor'), 'should not contain "docsync doctor" CLI invocation');
+    assert.ok(!content.includes('Bash') || !content.includes('docsync prep'), 'should not contain "docsync prep" CLI invocation');
+    assert.ok(!content.includes('Bash') || !content.includes('docsync init'), 'should not contain "docsync init" CLI invocation');
+    assert.ok(!content.includes('docsync skill install'), 'should not contain "docsync skill install" CLI invocation');
+    assert.ok(!content.includes('docsync codex install'), 'should not contain "docsync codex install" CLI invocation');
+  });
+
+  it('SKILL.md embeds template contents', () => {
+    const content = readFileSync(SKILL_TEMPLATE, 'utf8');
+    // Should embed key template content so AI can create files directly
+    assert.ok(content.includes('repomix-output.xml'), 'should reference context file');
+    assert.ok(content.includes('repomix.config.json') || content.includes('output'), 'should embed repomix config');
+    assert.ok(content.includes('.repomixignore') || content.includes('repomix-ignore'), 'should embed repomixignore');
+    assert.ok(content.includes('markdownlint-cli2'), 'should embed markdownlint config');
+    assert.ok(content.includes('doc-sync-rules'), 'should embed doc-sync-rules');
+  });
+
   it('SKILL.md does not contain sensitive info', () => {
     const content = readFileSync(SKILL_TEMPLATE, 'utf8');
     // Should not contain actual secrets or credentials
