@@ -12,7 +12,7 @@ export function hasCommand(command) {
 
 export function getCommandVersion(command) {
   try {
-    return execSync(`${command} --version`, { encoding: 'utf8' }).trim();
+    return execSync(`${command} --version`, { encoding: 'utf8', shell: process.platform === 'win32' }).trim();
   } catch {
     return null;
   }

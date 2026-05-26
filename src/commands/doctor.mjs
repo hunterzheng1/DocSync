@@ -3,14 +3,25 @@ import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { homedir } from 'node:os';
 import { logger } from '../utils/logger.mjs';
+import { hasCommand, getCommandVersion } from '../utils/shell.mjs';
 import { getGlobalClaudeSkillPath, getGlobalCodexAgentsPath } from '../utils/paths.mjs';
 
+// Tools where --version doesn't work or returns non-zero
+const VERSION_FALLBACKS = {
+  'markdownlint-cli2': () => {
+    // --version is treated as a glob pattern; try --help
+    try {
+      const out = execSync('markdownlint-cli2 --help', { encoding: 'utf8', shell: true }).trim();
+      return out.split('\n')[0];
+    } catch {
+      return 'installed';
+    }
+  },
+};
+
 function checkTool(name, required = false) {
-  try {
-    const version = execSync(`${name} --version`, { encoding: 'utf8' }).trim().split('\n')[0];
-    logger.ok(name, version);
-    return { name, status: 'ok', version };
-  } catch {
+  const exists = hasCommand(name);
+  if (!exists) {
     if (required) {
       logger.missing(name, 'REQUIRED');
     } else {
@@ -18,6 +29,22 @@ function checkTool(name, required = false) {
     }
     return { name, status: 'missing' };
   }
+
+  // Try to get version
+  let version = null;
+  const fallback = VERSION_FALLBACKS[name];
+  if (fallback) {
+    version = fallback();
+  } else {
+    version = getCommandVersion(name);
+  }
+
+  if (version) {
+    logger.ok(name, version.split('\n')[0]);
+  } else {
+    logger.ok(name, 'installed');
+  }
+  return { name, status: 'ok', version };
 }
 
 function checkFile(label, filePath) {
