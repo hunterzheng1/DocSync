@@ -74,6 +74,17 @@ export async function runDoctor(options = {}) {
   results.globalFiles.claudeSkill = existsSync(skillPath) ? 'installed' : 'missing';
   results.globalFiles.codexAgents = existsSync(codexPath) ? 'installed' : 'missing';
 
+  // Show install guidance for missing global files
+  if (results.globalFiles.claudeSkill === 'missing' || results.globalFiles.codexAgents === 'missing') {
+    process.stdout.write('\n');
+    if (results.globalFiles.claudeSkill === 'missing') {
+      process.stdout.write('  → Install Claude Skill: docsync skill install\n');
+    }
+    if (results.globalFiles.codexAgents === 'missing') {
+      process.stdout.write('  → Install Codex rules: docsync codex install\n');
+    }
+  }
+
   process.stdout.write('\n');
 
   if (!npmOk) {

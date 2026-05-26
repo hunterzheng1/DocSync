@@ -16,6 +16,18 @@ npx @hunterzheng/docsync help
 
 ## 快速开始
 
+全局安装后，建议先完成 Skill 和规则的安装：
+
+```bash
+# 安装 Claude Code Skill（只需一次）
+docsync skill install
+
+# 安装 Codex 全局规则（只需一次）
+docsync codex install
+```
+
+然后在任意项目中使用：
+
 ```bash
 # 1. 检查环境：确认所需工具是否已安装
 docsync doctor
