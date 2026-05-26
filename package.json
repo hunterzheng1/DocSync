@@ -1,6 +1,6 @@
 {
   "name": "@hunterzheng/docsync",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Reusable npm CLI for document synchronization workflows: Repomix context, markdownlint, Claude Skill, Codex rules, and AI document sync.",
   "type": "module",
   "bin": {
