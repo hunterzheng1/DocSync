@@ -41,6 +41,8 @@ export function buildPrompt(options = {}) {
     '- Report facts used from context.',
     '- Run markdownlint-cli2 --fix if available.',
     '',
+    'TIP: After installing the DocSync Skill (docsync skill install), you can use /docsync:sync in future sessions instead of this prompt.',
+    '',
     extra ? `ADDITIONAL REQUIREMENTS:\n${extra}` : '',
   ].filter(Boolean).join('\n');
 }

@@ -12,8 +12,16 @@ describe('codex template', () => {
     assert.ok(existsSync(CODEX_TEMPLATE), 'codex template should exist');
   });
 
-  it('AGENTS.docsync.md contains meaningful content', () => {
+  it('AGENTS.docsync.md contains workflow sections', () => {
     const content = readFileSync(CODEX_TEMPLATE, 'utf8');
-    assert.ok(content.length > 50, 'should have meaningful content');
+    assert.ok(content.includes('DOCSYNC_START'), 'should have DOCSYNC_START marker');
+    assert.ok(content.includes('DOCSYNC_END'), 'should have DOCSYNC_END marker');
+    assert.ok(content.includes('工作流') || content.includes('workflow'), 'should have workflow section');
+    assert.ok(content.includes('安全约束') || content.includes('Security'), 'should have security section');
+  });
+
+  it('AGENTS.docsync.md has substantial content', () => {
+    const content = readFileSync(CODEX_TEMPLATE, 'utf8');
+    assert.ok(content.length > 500, 'should have substantial content (>500 chars)');
   });
 });

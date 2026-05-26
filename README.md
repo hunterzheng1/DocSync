@@ -42,6 +42,22 @@ docsync prep
 docsync ai
 ```
 
+## AI 驱动使用方式
+
+安装 DocSync Skill 后，可以在 Claude Code、Codex 等 AI 工具中通过 slash 命令触发文档同步工作流：
+
+| Slash 命令 | 用途 |
+|-----------|------|
+| `/docsync:sync` | 完整文档同步（检查环境 → 准备上下文 → 读取上下文 → 对比差异 → 编辑文档 → 格式修复 → 报告） |
+| `/docsync:doctor` | 环境诊断（工具/文件检查） |
+| `/docsync:init` | 项目初始化（安装模板配置） |
+| `/docsync:prep` | 上下文准备（生成 repomix 文件） |
+| `/docsync:skill-install` | 安装 Claude Skill 到全局或项目 |
+| `/docsync:codex-install` | 安装 Codex 全局 AGENTS.md 规则 |
+
+AI 会读取 Skill 文件中的分步骤工作流，使用自身工具（Read, Write, Edit, Bash）逐步完成，无需在终端手动执行 CLI 命令。
+
+
 ## 命令详细说明
 
 ### docsync doctor
