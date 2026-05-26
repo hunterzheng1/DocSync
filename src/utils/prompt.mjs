@@ -20,10 +20,12 @@ export function buildPrompt(options = {}) {
     : 'README.md, AGENTS.md, CLAUDE.md';
 
   return [
-    `You are updating the following project documentation files: ${docTargets}.`,
+    `Create or update the following project documentation files: ${docTargets}.`,
+    '',
+    'IMPORTANT: If any of these files do not exist, CREATE them with appropriate content based on the prepared context.',
     '',
     'RULES:',
-    '1. Minimize changes. Only update what is necessary.',
+    '1. For new files, create complete content. For existing files, minimize changes and only update what is necessary.',
     '2. Do NOT invent commands, ports, environment variables, APIs, modules, or deployment steps.',
     '3. Base all content on repository facts from the prepared context.',
     '4. Mark uncertain content as TODO(review).',
