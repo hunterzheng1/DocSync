@@ -75,24 +75,30 @@
 - **状态**: [x] 已完成
 
 #### 任务描述
+
 创建命令存在性、版本读取和检测失败不中断的测试。
 
 #### 输入
+
 - `specs/environment-diagnostics/spec.md`
 
 #### 输出
+
 - `test/doctorTools.test.mjs`
 
 #### 实现步骤
+
 1. mock 命令存在和缺失。
 2. 添加 version unknown 仍可 ok 的测试。
 3. 添加推荐工具 missing 不失败的测试。
 
 #### 验收标准
+
 - [x] 覆盖 required/recommended 工具状态。
 - [x] 覆盖版本读取失败。
 
 #### 关联设计
+
 - spec.md 章节：环境工具检测
 - design.md 章节：6.3、8.1
 
@@ -105,25 +111,31 @@
 - **状态**: [x] 已完成
 
 #### 任务描述
+
 实现 `REQUIRED_TOOLS`、`RECOMMENDED_TOOLS` 和安全的工具检测函数。
 
 #### 输入
+
 - `test/doctorTools.test.mjs`
 
 #### 输出
+
 - `src/commands/doctor.mjs` 中检查定义
 - 必要的 `src/utils/shell.mjs` 扩展
 
 #### 实现步骤
+
 1. 定义 required/recommended 清单。
 2. 实现 `checkCommand(name, required)`。
 3. 版本获取失败时返回 `version: "unknown"`。
 
 #### 验收标准
+
 - [x] node/npm 标记 required。
 - [x] 推荐工具缺失不会抛出。
 
 #### 关联设计
+
 - spec.md 章节：环境工具检测
 - design.md 章节：4.2、6.3
 
@@ -136,24 +148,30 @@
 - **状态**: [x] 已完成
 
 #### 任务描述
+
 测试 Claude Skill 和 Codex AGENTS 目标路径存在/缺失状态。
 
 #### 输入
+
 - `specs/environment-diagnostics/design.md`
 
 #### 输出
+
 - `test/doctorFiles.test.mjs`
 
 #### 实现步骤
+
 1. 使用临时 HOME/USERPROFILE。
 2. 断言目标文件存在时为 installed。
 3. 断言目标文件缺失时为 missing。
 
 #### 验收标准
+
 - [x] 覆盖两个全局文件路径。
 - [x] 不读取文件内容。
 
 #### 关联设计
+
 - spec.md 章节：全局规则安装状态检测
 - design.md 章节：2.2、7.5
 
@@ -166,25 +184,31 @@
 - **状态**: [x] 已完成
 
 #### 任务描述
+
 实现 home 路径解析和全局文件存在状态检查。
 
 #### 输入
+
 - `test/doctorFiles.test.mjs`
 
 #### 输出
+
 - `src/utils/paths.mjs` 扩展
 - `src/commands/doctor.mjs` 文件检测逻辑
 
 #### 实现步骤
+
 1. 实现 `getHomeDir/resolveHomePath`。
 2. 定义 Claude Skill 和 Codex AGENTS 路径。
 3. 检查 exists，只输出状态。
 
 #### 验收标准
+
 - [x] 文件存在时输出 installed。
 - [x] 文件缺失时输出 missing 和安装提示。
 
 #### 关联设计
+
 - spec.md 章节：全局规则安装状态检测
 - design.md 章节：4.2、6.1
 
@@ -197,24 +221,30 @@
 - **状态**: [x] 已完成
 
 #### 任务描述
+
 测试 doctor 表格输出、quiet/verbose 和 required 缺失退出码。
 
 #### 输入
+
 - `specs/environment-diagnostics/spec.md`
 
 #### 输出
+
 - `test/doctor.test.mjs`
 
 #### 实现步骤
+
 1. mock required 全 ok。
 2. mock npm missing。
 3. 添加 quiet/verbose 输出断言。
 
 #### 验收标准
+
 - [x] required 缺失 exit 1。
 - [x] 推荐工具缺失 exit 0。
 
 #### 关联设计
+
 - spec.md 章节：状态输出格式
 - design.md 章节：3.1、8.1
 
@@ -227,28 +257,34 @@
 - **状态**: [x] 已完成
 
 #### 任务描述
+
 实现 `runDoctor(options)` 的完整报告输出和 CLI 路由接入。
 
 #### 输入
+
 - `test/doctor.test.mjs`
 - 工具检测和文件检测函数
 
 #### 输出
+
 - `src/commands/doctor.mjs`
 - 更新后的 `src/cli.mjs`
 
 #### 实现步骤
+
 1. 汇总 required、recommended、globalFiles。
 2. 根据 quiet/verbose 格式化输出。
 3. required 缺失时设置 exit 1。
 4. 接入 `doctor` 命令路由。
 
 #### 验收标准
+
 - [x] 输出所有检查项。
 - [x] optional missing 不失败。
 - [x] required missing 失败。
 
 #### 关联设计
+
 - spec.md 章节：全部需求项
 - design.md 章节：4.2、6.1、6.3
 
@@ -261,24 +297,30 @@
 - **状态**: [x] 已完成
 
 #### 任务描述
+
 运行 doctor 相关测试和一次手动 doctor 命令。
 
 #### 输入
+
 - doctor 相关测试文件
 
 #### 输出
+
 - 测试结果
 
 #### 实现步骤
+
 1. 运行 doctor 测试。
 2. 执行 `node bin/docsync.mjs doctor`。
 3. 检查输出包含 node/npm/git/repomix/Claude Skill/Codex 文件。
 
 #### 验收标准
+
 - [x] doctor 测试通过。
 - [x] 手动 doctor 输出完整状态。
 
 #### 关联设计
+
 - spec.md 章节：全部需求项
 - design.md 章节：8.2、9.2
 
@@ -369,6 +411,7 @@
 ---
 
 > **质量红线检查清单**
+>
 > - [x] 每个任务颗粒度符合"5分钟可实现"标准
 > - [x] 任务清单 100% 覆盖 spec.md 定义
 > - [x] 任务清单 100% 覆盖 design.md 定义

@@ -102,27 +102,33 @@
 - **状态**: [x] 已完成
 
 #### 任务描述
+
 创建模板内容测试，约束 `templates/claude-skill/SKILL.md` 不含敏感信息且包含 doc-sync 使用指令。
 
 #### 输入
+
 - `spec.md` 中 Claude Skill 安装与数据安全要求
 - `design.md` 中模板路径与 `skillName=doc-sync`
 
 #### 输出
+
 - `test/skillTemplate.test.mjs`
 
 #### 实现步骤
+
 1. 新建模板测试文件。
 2. 断言模板文件存在且大小小于 50 KB。
 3. 断言模板包含 `doc-sync`、安装目标说明和使用边界。
 4. 断言模板不包含 token、私钥、机器专属绝对路径等敏感模式。
 
 #### 验收标准
+
 - [ ] 测试文件使用 `node:test` 和 `node:assert/strict`。
 - [ ] 测试在模板缺失时失败。
 - [x] 敏感信息断言覆盖 token/key/pem/env 等关键词。
 
 #### 关联设计
+
 - spec.md 章节：1 新增需求、5.2 数据安全
 - design.md 章节：2.2 需新建文件、9.1 业务配置
 
@@ -135,26 +141,32 @@
 - **状态**: [x] 已完成
 
 #### 任务描述
+
 新增 `doc-sync` Skill 模板，作为 install/update 写入目标文件的唯一模板来源。
 
 #### 输入
+
 - `test/skillTemplate.test.mjs`
 - `templates/claude-skill/SKILL.md` 目标路径
 
 #### 输出
+
 - `templates/claude-skill/SKILL.md`
 
 #### 实现步骤
+
 1. 创建 `templates/claude-skill` 目录。
 2. 编写 `SKILL.md`，说明 DocSync 用途、可用命令和安全边界。
 3. 避免写入任何本机绝对路径、账号 token 或私有配置。
 
 #### 验收标准
+
 - [x] 模板测试通过。
 - [ ] 文件编码为 UTF-8。
 - [x] 模板内容可被完整写入目标 `SKILL.md`。
 
 #### 关联设计
+
 - spec.md 章节：1 新增需求、3.1 性能约束
 - design.md 章节：2.2 需新建文件、6.3 关键算法
 
@@ -167,27 +179,33 @@
 - **状态**: [x] 已完成
 
 #### 任务描述
+
 创建路径解析、install 保护、force/update 覆盖和 backup 行为的单元测试骨架。
 
 #### 输入
+
 - `spec.md` 中请求参数与错误码
 - `design.md` 中目标路径、状态机和异常处理
 
 #### 输出
+
 - `test/skill.test.mjs`
 
 #### 实现步骤
+
 1. 使用临时目录模拟 HOME 与项目 cwd。
 2. 添加全局路径解析测试。
 3. 添加项目路径解析测试。
 4. 添加目标不存在、内容相同、内容不同、force 覆盖、backup 覆盖的测试占位。
 
 #### 验收标准
+
 - [ ] 测试明确覆盖 `--global`、`--project`、`--cwd`。
 - [x] 内容不同且未 force 的测试期望 exit code 1 或等价错误对象。
 - [ ] backup 测试期望生成 `.bak.<timestamp>` 风格文件。
 
 #### 关联设计
+
 - spec.md 章节：2.1 接口定义、6.2 数据兼容性
 - design.md 章节：4.2 接口详细设计、6.2 状态机、8.1 异常分类
 
@@ -200,18 +218,22 @@
 - **状态**: [x] 已完成
 
 #### 任务描述
+
 实现路径解析、模板读取、内容比较、安全写入、保护性拒绝和可选备份。
 
 #### 输入
+
 - `templates/claude-skill/SKILL.md`
 - `test/skill.test.mjs`
 
 #### 输出
+
 - `src/utils/paths.mjs`
 - `src/utils/fs.mjs`
 - `src/commands/skill.mjs` 中可复用的安装核心逻辑
 
 #### 实现步骤
+
 1. 在 path 工具中解析 home 与 project 目标路径。
 2. 在 fs 工具中实现 UTF-8 读取、目录创建、写入和 backup。
 3. 实现完整字符串内容比较。
@@ -219,6 +241,7 @@
 5. 实现 update 和 install force 的覆盖写入流程。
 
 #### 验收标准
+
 - [x] 全局目标为 `<home>/.claude/skills/doc-sync/SKILL.md`。
 - [ ] 项目目标为 `<cwd>/.claude/skills/doc-sync/SKILL.md`。
 - [x] install 不默认覆盖不同内容。
@@ -226,6 +249,7 @@
 - [ ] `--backup` 在覆盖前生成备份。
 
 #### 关联设计
+
 - spec.md 章节：1 新增需求、4.1 内部依赖、5.3 审计要求
 - design.md 章节：2.2 需新建文件、4.2 业务逻辑、6.3 关键算法
 
@@ -238,16 +262,20 @@
 - **状态**: [x] 已完成
 
 #### 任务描述
+
 创建 `docsync skill` 子命令的 CLI 分发测试，覆盖 install/update/path 与参数错误。
 
 #### 输入
+
 - `spec.md` 中 CLI 参数与响应结构
 - `design.md` 中 `runSkill(rest, options)` 接口
 
 #### 输出
+
 - `test/skillCli.test.mjs`
 
 #### 实现步骤
+
 1. 准备调用 CLI 主入口或命令函数的测试 helper。
 2. 添加 `skill install` 成功输出状态测试。
 3. 添加 `skill update` 成功覆盖测试。
@@ -255,11 +283,13 @@
 5. 添加未知子命令、global/project 冲突的参数错误测试。
 
 #### 验收标准
+
 - [x] path 测试不写入文件。
 - [x] 参数错误返回 exit code 2 或等价错误对象。
 - [ ] 成功响应包含 target 与 status。
 
 #### 关联设计
+
 - spec.md 章节：2.1 请求参数、2.1 响应结构
 - design.md 章节：4.1 接口清单、4.2 接口详细设计
 
@@ -272,18 +302,22 @@
 - **状态**: [x] 已完成
 
 #### 任务描述
+
 实现 `docsync skill <install|update|path>` 的命令入口、参数校验和用户可读输出。
 
 #### 输入
+
 - `src/commands/skill.mjs` 核心逻辑
 - CLI 主分发入口
 - `test/skillCli.test.mjs`
 
 #### 输出
+
 - `src/commands/skill.mjs`
 - CLI 主入口中的 `skill` 路由接入
 
 #### 实现步骤
+
 1. 解析 `install/update/path` 子命令。
 2. 校验 `--global` 与 `--project` 互斥。
 3. 将 `--cwd` 仅用于 project 模式。
@@ -291,6 +325,7 @@
 5. 为错误路径设置约定 exit code。
 
 #### 验收标准
+
 - [ ] `docsync skill install` 默认安装到全局目标。
 - [ ] `docsync skill install --project` 安装到当前项目目标。
 - [ ] `docsync skill update` 覆盖写入模板内容。
@@ -298,6 +333,7 @@
 - [x] 未知子命令返回参数错误。
 
 #### 关联设计
+
 - spec.md 章节：1 新增需求、2.1 错误码定义
 - design.md 章节：4.2 业务逻辑、8.1 异常分类
 
@@ -310,30 +346,36 @@
 - **状态**: [x] 已完成
 
 #### 任务描述
+
 运行并补齐 Skill 管理相关测试，确认模板、路径、保护、更新和 CLI 输出满足契约。
 
 #### 输入
+
 - `test/skillTemplate.test.mjs`
 - `test/skill.test.mjs`
 - `test/skillCli.test.mjs`
 
 #### 输出
+
 - 通过的测试结果
 - 必要时补齐的断言
 
 #### 实现步骤
+
 1. 运行 Skill 相关测试文件。
 2. 补齐缺失的断言场景。
 3. 手动检查无真实 home 目录写入风险。
 4. 记录验证命令和结果。
 
 #### 验收标准
+
 - [x] 模板测试通过。
 - [ ] 路径与保护测试通过。
 - [ ] CLI 子命令测试通过。
 - [ ] 测试 fixture 不污染用户真实 `~/.claude` 目录。
 
 #### 关联设计
+
 - spec.md 章节：全部新增需求
 - design.md 章节：6.1 核心流程、8 异常处理、9 配置
 
@@ -427,6 +469,7 @@
 ---
 
 > **质量红线检查清单**
+>
 > - [x] 每个任务粒度符合可独立实现标准
 > - [x] 任务清单 100% 覆盖 spec.md 定义
 > - [x] 任务清单 100% 覆盖 design.md 定义

@@ -99,16 +99,20 @@ marker 算法与 CLI 行为均先建立测试，再实现。
 - **状态**: [x] 已完成
 
 #### 任务描述
+
 为 `upsertMarkedBlock` 建立单元测试，确保 marker 外用户内容逐字保留。
 
 #### 输入
+
 - `spec.md` 中用户内容保护和 marker 约束
 - `design.md` 中关键算法与状态机
 
 #### 输出
+
 - `test/fsMarkedBlock.test.mjs` 或合并到 `test/fs.test.mjs`
 
 #### 实现步骤
+
 1. 创建 marker 常量 fixture。
 2. 添加空文本生成完整 block 的测试。
 3. 添加无 marker 时追加 block 的测试。
@@ -117,11 +121,13 @@ marker 算法与 CLI 行为均先建立测试，再实现。
 6. 添加 marker 前后用户内容逐字保留的测试。
 
 #### 验收标准
+
 - [x] 测试覆盖 missing、no marker、one marker、multi marker。
 - [x] 保留内容断言使用严格字符串比较。
 - [x] 多 marker 场景期望抛错或返回保护性错误。
 
 #### 关联设计
+
 - spec.md 章节：1 新增需求、3.1 性能约束
 - design.md 章节：6.2 状态机、6.3 关键算法
 
@@ -134,16 +140,20 @@ marker 算法与 CLI 行为均先建立测试，再实现。
 - **状态**: [x] 已完成
 
 #### 任务描述
+
 实现 marker block 插入、替换和多 marker 拒绝逻辑。
 
 #### 输入
+
 - `test/fsMarkedBlock.test.mjs`
 - marker 常量 `<!-- docsync:start -->`、`<!-- docsync:end -->`
 
 #### 输出
+
 - `src/utils/fs.mjs` 中 `upsertMarkedBlock()`
 
 #### 实现步骤
+
 1. 统计 start/end marker 出现次数。
 2. 对 0 对 marker 执行追加，并在非空原文后补换行。
 3. 对 1 对 marker 执行仅 block 内替换。
@@ -151,12 +161,14 @@ marker 算法与 CLI 行为均先建立测试，再实现。
 5. 返回新内容和状态 `created|inserted|updated`。
 
 #### 验收标准
+
 - [x] marker 外内容逐字保留。
 - [x] 非空文件追加 block 前有清晰换行边界。
 - [x] 多 marker 不自动修复。
 - [x] 返回状态可供 CLI 输出使用。
 
 #### 关联设计
+
 - spec.md 章节：1 用户内容保护、2.1 错误码定义
 - design.md 章节：2.2 需新建文件、6.3 关键算法、8.1 异常分类
 
@@ -169,27 +181,33 @@ marker 算法与 CLI 行为均先建立测试，再实现。
 - **状态**: [x] 已完成
 
 #### 任务描述
+
 创建模板测试，约束 `templates/codex/AGENTS.docsync.md` 可安全嵌入 marker block。
 
 #### 输入
+
 - `spec.md` 中 Codex 全局规则安装要求
 - `design.md` 中模板路径与 marker 配置
 
 #### 输出
+
 - `test/codexTemplate.test.mjs`
 
 #### 实现步骤
+
 1. 断言模板文件存在。
 2. 断言模板包含 DocSync 使用规则。
 3. 断言模板不包含外层 start/end marker，避免重复嵌套。
 4. 断言模板不包含 token、私钥或用户本机路径。
 
 #### 验收标准
+
 - [x] 模板缺失时测试失败。
 - [x] 模板内容可作为 marker block 内部文本。
 - [x] 敏感信息关键词被覆盖。
 
 #### 关联设计
+
 - spec.md 章节：1 新增需求、5.2 数据安全
 - design.md 章节：2.2 需新建文件、9.1 业务配置
 
@@ -202,27 +220,33 @@ marker 算法与 CLI 行为均先建立测试，再实现。
 - **状态**: [x] 已完成
 
 #### 任务描述
+
 新增 DocSync Codex 规则模板，供 install/update 包装成 marker block 写入 AGENTS.md。
 
 #### 输入
+
 - `test/codexTemplate.test.mjs`
 - `templates/codex/AGENTS.docsync.md` 目标路径
 
 #### 输出
+
 - `templates/codex/AGENTS.docsync.md`
 
 #### 实现步骤
+
 1. 创建 `templates/codex` 目录。
 2. 编写面向 Codex 的 DocSync 使用规则。
 3. 避免在模板中包含外层 marker。
 4. 避免写入敏感信息或本机路径。
 
 #### 验收标准
+
 - [x] 模板测试通过。
 - [x] 模板可被 `upsertMarkedBlock` 包装。
 - [x] 模板不读取或泄露用户 AGENTS 内容。
 
 #### 关联设计
+
 - spec.md 章节：1 Codex 全局规则安装
 - design.md 章节：2.2 需新建文件、7.3 中间件与基础设施
 
@@ -235,16 +259,20 @@ marker 算法与 CLI 行为均先建立测试，再实现。
 - **状态**: [x] 已完成
 
 #### 任务描述
+
 创建 `docsync codex` CLI 测试，覆盖 install、update、path、dry-run、backup 与参数错误。
 
 #### 输入
+
 - `spec.md` 中请求参数和响应结构
 - `design.md` 中 `runCodex(rest, options)` 业务逻辑
 
 #### 输出
+
 - `test/codexCli.test.mjs`
 
 #### 实现步骤
+
 1. 使用临时 HOME 模拟 `~/.codex/AGENTS.md`。
 2. 添加目标缺失时 install 创建文件测试。
 3. 添加目标存在无 marker 时 install 追加测试。
@@ -254,12 +282,14 @@ marker 算法与 CLI 行为均先建立测试，再实现。
 7. 添加 unknown subcommand 参数错误测试。
 
 #### 验收标准
+
 - [x] 所有文件写入均发生在临时 HOME。
 - [x] dry-run 不修改目标文件。
 - [x] backup 场景期望生成备份文件。
 - [x] 成功输出包含 target、status、preservedUserContent。
 
 #### 关联设计
+
 - spec.md 章节：2.1 请求参数、2.1 响应结构
 - design.md 章节：4.1 接口清单、4.2 接口详细设计
 
@@ -272,18 +302,22 @@ marker 算法与 CLI 行为均先建立测试，再实现。
 - **状态**: [x] 已完成
 
 #### 任务描述
+
 实现 `docsync codex <install|update|path>`，并将 marker upsert、模板读取和目标路径解析串联。
 
 #### 输入
+
 - `src/utils/fs.mjs` 中 `upsertMarkedBlock()`
 - `templates/codex/AGENTS.docsync.md`
 - CLI 主分发入口
 
 #### 输出
+
 - `src/commands/codex.mjs`
 - CLI 主入口中的 `codex` 路由接入
 
 #### 实现步骤
+
 1. 解析并校验 codex 子命令。
 2. 解析目标路径 `~/.codex/AGENTS.md`。
 3. `path` 模式只输出路径。
@@ -293,6 +327,7 @@ marker 算法与 CLI 行为均先建立测试，再实现。
 7. 统一输出状态与错误码。
 
 #### 验收标准
+
 - [x] 目标缺失时创建 AGENTS.md。
 - [x] 目标存在无 marker 时保留原文并追加 block。
 - [x] 已有一对 marker 时只替换 block 内容。
@@ -301,6 +336,7 @@ marker 算法与 CLI 行为均先建立测试，再实现。
 - [x] `--dry-run` 不写文件。
 
 #### 关联设计
+
 - spec.md 章节：1 新增需求、2.1 错误码定义
 - design.md 章节：4.2 业务逻辑、6.1 核心流程、8.1 异常分类
 
@@ -313,30 +349,36 @@ marker 算法与 CLI 行为均先建立测试，再实现。
 - **状态**: [x] 已完成
 
 #### 任务描述
+
 运行并补齐 Codex 相关测试，确认 marker 管理不会破坏用户内容。
 
 #### 输入
+
 - `test/fsMarkedBlock.test.mjs`
 - `test/codexTemplate.test.mjs`
 - `test/codexCli.test.mjs`
 
 #### 输出
+
 - 通过的测试结果
 - 必要时补齐的断言
 
 #### 实现步骤
+
 1. 运行 marker、模板和 CLI 测试。
 2. 补齐用户内容保护断言。
 3. 手动检查测试不读写真实 `~/.codex/AGENTS.md`。
 4. 记录验证命令和结果。
 
 #### 验收标准
+
 - [x] marker 算法测试通过。
 - [x] 模板测试通过。
 - [x] codex CLI 测试通过。
 - [x] 无真实 home 目录污染。
 
 #### 关联设计
+
 - spec.md 章节：全部新增需求
 - design.md 章节：6 核心流程、8 异常处理、9 配置
 
@@ -430,6 +472,7 @@ marker 算法与 CLI 行为均先建立测试，再实现。
 ---
 
 > **质量红线检查清单**
+>
 > - [x] 每个任务粒度符合可独立实现标准
 > - [x] 任务清单 100% 覆盖 spec.md 定义
 > - [x] 任务清单 100% 覆盖 design.md 定义

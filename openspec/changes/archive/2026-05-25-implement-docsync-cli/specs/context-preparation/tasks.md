@@ -75,25 +75,31 @@
 - **状态**: [x] 已完成
 
 #### 任务描述
+
 创建外部命令检测、执行和 git 状态辅助的测试骨架。
 
 #### 输入
+
 - `specs/context-preparation/spec.md`
 
 #### 输出
+
 - `test/shell.test.mjs`
 - `test/git.test.mjs`
 
 #### 实现步骤
+
 1. 为 `hasCommand` 添加存在/缺失测试。
 2. 为 `run/capture` 添加成功和失败测试骨架。
 3. 为 git 仓库检测添加非 git 目录测试。
 
 #### 验收标准
+
 - [x] 覆盖命令缺失不抛出进程崩溃。
 - [x] 覆盖非 git 仓库降级。
 
 #### 关联设计
+
 - spec.md 章节：Repomix 上下文生成、git 状态输出
 - design.md 章节：2.2、7.3、8.1
 
@@ -106,27 +112,33 @@
 - **状态**: [x] 已完成
 
 #### 任务描述
+
 实现命令检测执行、git 状态辅助和步骤日志输出。
 
 #### 输入
+
 - `test/shell.test.mjs`
 - `test/git.test.mjs`
 
 #### 输出
+
 - `src/utils/shell.mjs`
 - `src/utils/git.mjs`
 - `src/utils/logger.mjs`
 
 #### 实现步骤
+
 1. 实现 `hasCommand/run/capture`。
 2. 实现 `isGitRepo/getStatusShort`。
 3. 实现步骤状态输出辅助。
 
 #### 验收标准
+
 - [x] `hasCommand` 对缺失命令返回 false。
 - [x] 非 git 仓库返回 skipped 状态。
 
 #### 关联设计
+
 - spec.md 章节：git 状态输出、Markdown 格式修复
 - design.md 章节：6.3、7.4
 
@@ -139,24 +151,30 @@
 - **状态**: [x] 已完成
 
 #### 任务描述
+
 创建 `test/prep.test.mjs`，覆盖默认流程、`--no-init`、`--compress` 和 `--dry-run`。
 
 #### 输入
+
 - `specs/context-preparation/spec.md`
 
 #### 输出
+
 - `test/prep.test.mjs`
 
 #### 实现步骤
+
 1. 设计可注入 shell runner 的测试结构。
 2. 添加默认流程顺序断言。
 3. 添加 no-init/compress/dry-run 断言。
 
 #### 验收标准
+
 - [x] 默认流程顺序为 init → git → repomix → lint。
 - [x] compress 触发 `repomix --compress`。
 
 #### 关联设计
+
 - spec.md 章节：prep 工作流编排
 - design.md 章节：4.2、6.1
 
@@ -169,18 +187,22 @@
 - **状态**: [x] 已完成
 
 #### 任务描述
+
 实现 `src/commands/prep.mjs` 的流程编排和状态汇总。
 
 #### 输入
+
 - `test/prep.test.mjs`
 - `src/commands/init.mjs`
 - `src/utils/shell.mjs`
 - `src/utils/git.mjs`
 
 #### 输出
+
 - `src/commands/prep.mjs`
 
 #### 实现步骤
+
 1. 解析 cwd 和 prep options。
 2. 按 noInit 决定是否调用 init。
 3. 检测 git 并输出 status。
@@ -188,11 +210,13 @@
 5. 按 noLint 检测并运行 markdownlint。
 
 #### 验收标准
+
 - [x] Repomix 缺失时 exit 1 并提示安装。
 - [x] markdownlint 缺失时不失败。
 - [x] dry-run 不执行写入命令。
 
 #### 关联设计
+
 - spec.md 章节：全部需求项
 - design.md 章节：4.2、6.1、8.1
 
@@ -205,24 +229,30 @@
 - **状态**: [x] 已完成
 
 #### 任务描述
+
 创建通过 bin 调用 `docsync prep` 的集成式测试骨架。
 
 #### 输入
+
 - `specs/context-preparation/design.md`
 
 #### 输出
+
 - `test/prepCli.test.mjs`
 
 #### 实现步骤
+
 1. 准备临时项目目录。
 2. 通过环境或 runner mock 模拟 repomix/markdownlint。
 3. 添加缺失 repomix 失败用例。
 
 #### 验收标准
+
 - [x] CLI 层能接收 no-init/no-lint/compress。
 - [x] 缺失 repomix 的错误信息可断言。
 
 #### 关联设计
+
 - spec.md 章节：接口定义、错误码定义
 - design.md 章节：8.1
 
@@ -235,26 +265,32 @@
 - **状态**: [x] 已完成
 
 #### 任务描述
+
 将 `runPrep` 接入 `src/cli.mjs` 的 `prep` 命令，并确认参数透传。
 
 #### 输入
+
 - `src/commands/prep.mjs`
 - `src/cli.mjs`
 - `test/prepCli.test.mjs`
 
 #### 输出
+
 - 更新后的 `src/cli.mjs`
 
 #### 实现步骤
+
 1. 导入 `runPrep`。
 2. 在 command map/switch 中加入 `prep`。
 3. 保证 compress/no-lint/no-init/dry-run 选项传递。
 
 #### 验收标准
+
 - [x] `docsync prep --compress` 调用 prep handler。
 - [x] `docsync prep --no-init --no-lint` 选项可传入。
 
 #### 关联设计
+
 - spec.md 章节：prep 工作流编排
 - design.md 章节：4.2
 
@@ -267,24 +303,30 @@
 - **状态**: [x] 已完成
 
 #### 任务描述
+
 运行 prep 相关测试和 dry-run 手动验证。
 
 #### 输入
+
 - prep 相关测试文件
 
 #### 输出
+
 - 测试结果
 
 #### 实现步骤
+
 1. 运行 prep/shell/git 测试。
 2. 执行 `node bin/docsync.mjs prep --dry-run`。
 3. 检查输出包含 init/git/repomix/lint 计划。
 
 #### 验收标准
+
 - [x] 所有 prep 相关测试通过。
 - [x] dry-run 不生成 `repomix-output.xml`。
 
 #### 关联设计
+
 - spec.md 章节：全部需求项
 - design.md 章节：9.2
 
@@ -377,6 +419,7 @@
 ---
 
 > **质量红线检查清单**
+>
 > - [x] 每个任务颗粒度符合"5分钟可实现"标准
 > - [x] 任务清单 100% 覆盖 spec.md 定义
 > - [x] 任务清单 100% 覆盖 design.md 定义

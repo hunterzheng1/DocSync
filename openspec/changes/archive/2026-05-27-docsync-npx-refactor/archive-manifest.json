@@ -1,0 +1,65 @@
+{
+  "change": "docsync-npx-refactor",
+  "archived_at": "2026-05-27T02:24:52.273Z",
+  "reason": "变更已完成实施",
+  "method": "skywalk-full-spec-archive",
+  "source_path": "openspec/changes/docsync-npx-refactor",
+  "archive_path": "openspec/changes/archive/2026-05-27-docsync-npx-refactor",
+  "copied_specs": [
+    {
+      "capability": "ai-commands",
+      "source": "openspec/changes/archive/2026-05-27-docsync-npx-refactor/specs/ai-commands/spec.md",
+      "target": "openspec/specs/ai-commands/spec.md"
+    },
+    {
+      "capability": "ai-workflow-orchestration",
+      "source": "openspec/changes/archive/2026-05-27-docsync-npx-refactor/specs/ai-workflow-orchestration/spec.md",
+      "target": "openspec/specs/ai-workflow-orchestration/spec.md"
+    },
+    {
+      "capability": "claude-skill-management",
+      "source": "openspec/changes/archive/2026-05-27-docsync-npx-refactor/specs/claude-skill-management/spec.md",
+      "target": "openspec/specs/claude-skill-management/spec.md"
+    },
+    {
+      "capability": "cli-command-routing",
+      "source": "openspec/changes/archive/2026-05-27-docsync-npx-refactor/specs/cli-command-routing/spec.md",
+      "target": "openspec/specs/cli-command-routing/spec.md"
+    },
+    {
+      "capability": "codex-rule-management",
+      "source": "openspec/changes/archive/2026-05-27-docsync-npx-refactor/specs/codex-rule-management/spec.md",
+      "target": "openspec/specs/codex-rule-management/spec.md"
+    },
+    {
+      "capability": "context-preparation",
+      "source": "openspec/changes/archive/2026-05-27-docsync-npx-refactor/specs/context-preparation/spec.md",
+      "target": "openspec/specs/context-preparation/spec.md"
+    },
+    {
+      "capability": "doc-sync-algorithm",
+      "source": "openspec/changes/archive/2026-05-27-docsync-npx-refactor/specs/doc-sync-algorithm/spec.md",
+      "target": "openspec/specs/doc-sync-algorithm/spec.md"
+    },
+    {
+      "capability": "npx-bootstrap",
+      "source": "openspec/changes/archive/2026-05-27-docsync-npx-refactor/specs/npx-bootstrap/spec.md",
+      "target": "openspec/specs/npx-bootstrap/spec.md"
+    },
+    {
+      "capability": "project-initialization",
+      "source": "openspec/changes/archive/2026-05-27-docsync-npx-refactor/specs/project-initialization/spec.md",
+      "target": "openspec/specs/project-initialization/spec.md"
+    },
+    {
+      "capability": "rules-management",
+      "source": "openspec/changes/archive/2026-05-27-docsync-npx-refactor/specs/rules-management/spec.md",
+      "target": "openspec/specs/rules-management/spec.md"
+    },
+    {
+      "capability": "workspace-isolation",
+      "source": "openspec/changes/archive/2026-05-27-docsync-npx-refactor/specs/workspace-isolation/spec.md",
+      "target": "openspec/specs/workspace-isolation/spec.md"
+    }
+  ]
+}

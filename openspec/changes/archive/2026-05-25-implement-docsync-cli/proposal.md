@@ -52,12 +52,14 @@ DocSync needs a reusable npm CLI so projects do not repeatedly hand-maintain Rep
 DocSync 需要把跨项目文档同步流程沉淀为一个可通过 npm 发布和迭代的 CLI，避免每个仓库重复维护 Repomix、markdownlint、Claude Skill、Codex 规则和 AI 文档同步 prompt。当前手动方案容易造成规则分散、文档漂移、命令编造和跨机器配置不一致。
 
 ### 1.1 现状问题
+
 - 每个项目都要手动安装或配置 Repomix、markdownlint、文档同步 prompt 和规则文件，重复成本高。
 - Claude Code Skill、Codex 全局规则、项目级规则分散维护，后续规则升级难以同步。
 - README.md、AGENTS.md、CLAUDE.md 等文档容易过长、重复、过时，甚至出现 AI 编造命令、模块或部署步骤。
 - 使用者缺少一个统一入口来完成环境检查、上下文准备、格式修复和 AI 会话启动。
 
 ### 1.2 业务诉求
+
 - 提供固定 CLI 命令 `docsync`，让用户可通过全局安装或 `npx` 在任意项目中运行文档同步工作流。
 - 将项目初始化、上下文准备、AI 调用、环境诊断、Claude Skill 管理、Codex 规则管理封装为清晰命令。
 - 第一版保持轻量、安全、可审计：不内置 LLM API、不保存 token、不自动提交 git、不自动发布 npm、不上传仓库源码。
@@ -78,6 +80,7 @@ DocSync 需要把跨项目文档同步流程沉淀为一个可通过 npm 发布�
 ## 3. 能力分解
 
 ### 3.1 新增能力
+
 - `cli-command-routing`: 定义 npm CLI 包、bin 入口、命令分发、通用参数解析和 help/version 行为。
 - `project-initialization`: 在项目中安全补齐 Repomix、markdownlint 和文档同步规则模板，遵守不覆盖默认策略。
 - `context-preparation`: 编排 init、git 状态输出、Repomix 上下文生成和 markdownlint-cli2 格式修复。
@@ -88,6 +91,7 @@ DocSync 需要把跨项目文档同步流程沉淀为一个可通过 npm 发布�
 - `package-docs-release-readiness`: 补齐 README、AGENTS、CHANGELOG、LICENSE、npm files 白名单和发布前安全检查约束。
 
 ### 3.2 修改能力
+
 - 无。当前 `openspec/specs/` 尚无与 DocSync CLI 相关的既有能力规格，本次为新增能力集合。
 
 ---
@@ -95,6 +99,7 @@ DocSync 需要把跨项目文档同步流程沉淀为一个可通过 npm 发布�
 ## 4. 影响范围
 
 ### 4.1 涉及模块
+
 - [ ] npm 包元数据：定义包名、版本、bin、files、engines、scripts、仓库信息和发布约束。
 - [ ] CLI 入口与命令分发：提供 `docsync` 命令入口、主分发逻辑、错误处理和帮助输出。
 - [ ] 命令模块：覆盖 init、prep、ai、auto、doctor、skill、codex、version、help。
@@ -105,6 +110,7 @@ DocSync 需要把跨项目文档同步流程沉淀为一个可通过 npm 发布�
 - [ ] 发布安全：通过 npm files 白名单、`.gitignore`、`.npmignore` 和 `npm pack --dry-run` 避免敏感或生成文件进入发布包。
 
 ### 4.2 依赖关系
+
 ```
 [DESIGN.md]
     --> [proposal: implement-docsync-cli]
@@ -114,6 +120,7 @@ DocSync 需要把跨项目文档同步流程沉淀为一个可通过 npm 发布�
 ```
 
 ### 4.3 数据影响
+
 - 数据库表变更：无。
 - 接口变更：无对外服务 API；新增本地 CLI 命令契约和命令行参数契约。
 - 配置变更：新增项目模板配置、Claude Skill 文件目标、Codex 全局 AGENTS.md marker block、npm 发布白名单配置。
@@ -123,12 +130,14 @@ DocSync 需要把跨项目文档同步流程沉淀为一个可通过 npm 发布�
 ## 5. 约束与假设
 
 ### 5.1 业务约束
+
 - 第一版不内置 LLM API 调用，不替代 Repomix、Claude Code、Codex，只做工作流协调。
 - 不自动提交 git、不自动发布 npm、不保存 token、不上传仓库源码到第三方服务。
 - 默认 GitHub 用户名为 `hunterzheng1`，默认仓库为 `hunterzheng1/docsync`，默认 npm 包名为 `@hunterzheng1/docsync`；若实际 npm scope 不可用，发布前保留调整空间。
 - `docsync` 作为 CLI 命令名保持稳定，即使 npm 包名后续变化也不影响用户使用。
 
 ### 5.2 技术约束
+
 - Node.js 版本要求为 `>=18`，模块格式为 ESM，包管理器为 npm。
 - CLI bin 入口必须以 `#!/usr/bin/env node` 开头，并通过 `package.json` 的 `bin` 字段暴露。
 - 第一版避免引入不必要运行时依赖，Repomix 和 markdownlint-cli2 通过外部命令检测与提示处理。
@@ -136,6 +145,7 @@ DocSync 需要把跨项目文档同步流程沉淀为一个可通过 npm 发布�
 - 默认不覆盖用户既有文件；只有显式传入 `--force` 时才允许覆盖，传入 `--backup` 时覆盖前需备份。
 
 ### 5.3 前置依赖
+
 - [ ] Node.js 与 npm 可用：实现、测试和本地 CLI 验证的基础。
 - [ ] DESIGN.md 已作为需求来源：本 proposal 的业务目标和能力域来自该文档。
 - [ ] openspec change 已创建：`openspec/changes/implement-docsync-cli/`。
@@ -165,6 +175,7 @@ DocSync 需要把跨项目文档同步流程沉淀为一个可通过 npm 发布�
 ---
 
 > **质量红线检查清单**
+>
 > - [x] 逻辑链路已闭环
 > - [x] 受影响模块已明确
 > - [x] 依赖关系已梳理

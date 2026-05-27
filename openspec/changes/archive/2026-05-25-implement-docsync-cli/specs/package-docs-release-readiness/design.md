@@ -119,17 +119,20 @@
 #### 接口 1：Release readiness scripts
 
 **基本信息**：
+
 - 路径：`npm test` / `npm run lint` / `npm run pack:dry`
 - 方法：命令行调用
 - 认证：不需要；npm publish 需用户自行认证
 
 **请求参数**：
+
 | 参数名 | 类型 | 必填 | 说明 | 约束 |
 |-------|------|------|------|------|
 | script | string | 是 | npm script 名称 | `test/lint/pack:dry` |
 | package.files | string[] | 是 | 发布白名单 | 只包含允许目录/文件 |
 
 **响应结构**：
+
 ```json
 {
   "code": 0,
@@ -143,6 +146,7 @@
 ```
 
 **业务逻辑**：
+
 1. `package.json` 定义元数据、bin、files、engines、scripts。
 2. README/AGENTS/CHANGELOG/LICENSE 补齐对应章节。
 3. `.gitignore` 和 `.npmignore` 排除敏感与生成文件。
@@ -279,6 +283,7 @@
 ---
 
 > **质量红线检查清单**
+>
 > - [x] **现有代码锚点已标注**：需修改的文件、类、方法已明确（或确认为纯新建）
 > - [x] **现有约束已识别**：影响设计的现有系统约束已列出并有应对策略
 > - [x] **字段完整性**：字段追溯表已完成，无无故丢弃字段

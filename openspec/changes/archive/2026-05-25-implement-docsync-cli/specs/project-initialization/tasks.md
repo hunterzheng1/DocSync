@@ -75,24 +75,30 @@
 - **状态**: [x] 已完成
 
 #### 任务描述
+
 创建 `test/fs.test.mjs` 覆盖缺失写入、默认跳过、force 覆盖、backup 和 dry-run。
 
 #### 输入
+
 - `specs/project-initialization/spec.md`
 
 #### 输出
+
 - `test/fs.test.mjs`
 
 #### 实现步骤
+
 1. 创建临时目录测试辅助。
 2. 添加 `writeIfMissing` 创建/跳过用例。
 3. 添加 force/backup/dry-run 用例骨架。
 
 #### 验收标准
+
 - [x] 测试文件包含 4 类写入策略场景。
 - [x] 每个测试使用独立临时目录。
 
 #### 关联设计
+
 - spec.md 章节：默认不覆盖、显式覆盖与备份、dry-run 初始化
 - design.md 章节：6.2、6.3、8.1
 
@@ -105,25 +111,31 @@
 - **状态**: [x] 已完成
 
 #### 任务描述
+
 实现 `src/utils/fs.mjs` 的存在检测、目录创建、读取、写入、备份和 `writeIfMissing`。
 
 #### 输入
+
 - `test/fs.test.mjs`
 
 #### 输出
+
 - `src/utils/fs.mjs`
 
 #### 实现步骤
+
 1. 实现 `exists/ensureDir/readText/writeText`。
 2. 实现 `.bak.<timestamp>` 备份。
 3. 实现 `writeIfMissing` 返回 action result。
 
 #### 验收标准
+
 - [x] 默认不覆盖已有文件。
 - [x] force + backup 先备份再覆盖。
 - [x] dry-run 不写入文件。
 
 #### 关联设计
+
 - spec.md 章节：默认不覆盖、显式覆盖与备份
 - design.md 章节：2.2、6.3
 
@@ -136,24 +148,30 @@
 - **状态**: [x] 已完成
 
 #### 任务描述
+
 为 4 个项目模板文件创建存在性和关键内容测试。
 
 #### 输入
+
 - `specs/project-initialization/design.md`
 
 #### 输出
+
 - `test/templates.test.mjs`
 
 #### 实现步骤
+
 1. 断言 `templates/project/repomix.config.json` 存在。
 2. 断言 `.repomixignore` 包含 `.env` 和 key 文件模式。
 3. 断言 doc-sync-rules 包含 README/AGENTS/CLAUDE 职责。
 
 #### 验收标准
+
 - [x] 覆盖全部 4 个模板路径。
 - [x] 覆盖敏感文件排除规则。
 
 #### 关联设计
+
 - spec.md 章节：项目模板初始化
 - design.md 章节：2.2、7.3
 
@@ -166,27 +184,33 @@
 - **状态**: [x] 已完成
 
 #### 任务描述
+
 创建 Repomix、repomixignore、markdownlint-cli2 和 doc-sync-rules 模板。
 
 #### 输入
+
 - `test/templates.test.mjs`
 
 #### 输出
+
 - `templates/project/repomix.config.json`
 - `templates/project/.repomixignore`
 - `templates/project/.markdownlint-cli2.jsonc`
 - `templates/project/docs/doc-sync-rules.md`
 
 #### 实现步骤
+
 1. 创建模板目录树。
 2. 写入 Repomix XML 输出配置。
 3. 写入敏感文件 ignore 和文档同步规则。
 
 #### 验收标准
+
 - [x] 4 个模板文件存在。
 - [x] ignore 模板排除 env/key/repomix-output。
 
 #### 关联设计
+
 - spec.md 章节：项目模板初始化
 - design.md 章节：2.2、5.3
 
@@ -199,25 +223,31 @@
 - **状态**: [x] 已完成
 
 #### 任务描述
+
 创建 `test/init.test.mjs` 覆盖空目录、重复执行、部分缺失、force 和 dry-run。
 
 #### 输入
+
 - `specs/project-initialization/spec.md`
 
 #### 输出
+
 - `test/init.test.mjs`
 
 #### 实现步骤
+
 1. 准备临时项目目录。
 2. 添加空目录初始化用例。
 3. 添加重复初始化不覆盖用例。
 4. 添加 dry-run 文件数量不变用例。
 
 #### 验收标准
+
 - [x] 覆盖创建 4 个目标文件。
 - [x] 覆盖重复执行跳过。
 
 #### 关联设计
+
 - spec.md 章节：全部需求项
 - design.md 章节：4.2、6.1
 
@@ -230,29 +260,35 @@
 - **状态**: [x] 已完成
 
 #### 任务描述
+
 实现 `src/commands/init.mjs` 的模板映射、动作规划、写入和摘要输出。
 
 #### 输入
+
 - `test/init.test.mjs`
 - `src/utils/fs.mjs`
 - `templates/project/**`
 
 #### 输出
+
 - `src/commands/init.mjs`
 - `src/utils/paths.mjs` 中必要路径函数
 
 #### 实现步骤
+
 1. 定义 4 个模板到目标路径映射。
 2. 解析 cwd 和模板根目录。
 3. 调用 `writeIfMissing` 并汇总结果。
 4. 输出 created/skipped/overwritten/backups。
 
 #### 验收标准
+
 - [x] `docsync init` 在空目录创建 4 个文件。
 - [x] `--force --backup` 产生备份记录。
 - [x] `--dry-run` 不写入。
 
 #### 关联设计
+
 - spec.md 章节：全部需求项
 - design.md 章节：4.2、6.1、6.2
 
@@ -265,27 +301,33 @@
 - **状态**: [x] 已完成
 
 #### 任务描述
+
 运行初始化相关测试和一次临时目录手动验证。
 
 #### 输入
+
 - `test/fs.test.mjs`
 - `test/templates.test.mjs`
 - `test/init.test.mjs`
 
 #### 输出
+
 - 测试结果
 - 手动验证记录
 
 #### 实现步骤
+
 1. 运行相关测试。
 2. 在临时目录执行 `node bin/docsync.mjs init --cwd <tmp>`。
 3. 检查 4 个目标文件存在。
 
 #### 验收标准
+
 - [x] 初始化相关测试通过。
 - [x] 手动验证 4 个目标文件存在。
 
 #### 关联设计
+
 - spec.md 章节：全部需求项
 - design.md 章节：8.1、9.2
 
@@ -375,6 +417,7 @@
 ---
 
 > **质量红线检查清单**
+>
 > - [x] 每个任务颗粒度符合"5分钟可实现"标准
 > - [x] 任务清单 100% 覆盖 spec.md 定义
 > - [x] 任务清单 100% 覆盖 design.md 定义

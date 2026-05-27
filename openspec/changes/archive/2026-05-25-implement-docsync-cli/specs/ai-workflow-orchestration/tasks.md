@@ -74,24 +74,30 @@
 - **状态**: [x] 已完成
 
 #### 任务描述
+
 创建 `test/prompt.test.mjs` 覆盖默认 prompt、docs 范围和 extra 追加。
 
 #### 输入
+
 - `specs/ai-workflow-orchestration/spec.md`
 
 #### 输出
+
 - `test/prompt.test.mjs`
 
 #### 实现步骤
+
 1. 断言默认 prompt 包含 README/AGENTS/CLAUDE 职责。
 2. 断言 prompt 包含禁止编造和 TODO(review)。
 3. 断言 docs/extra 参数影响输出。
 
 #### 验收标准
+
 - [x] 覆盖默认 prompt 硬规则。
 - [x] 覆盖 `--docs` 和 `--extra`。
 
 #### 关联设计
+
 - spec.md 章节：AI prompt 构建
 - design.md 章节：6.3
 
@@ -104,24 +110,30 @@
 - **状态**: [x] 已完成
 
 #### 任务描述
+
 实现 `src/utils/prompt.mjs`，构建安全、事实导向的文档同步 prompt。
 
 #### 输入
+
 - `test/prompt.test.mjs`
 
 #### 输出
+
 - `src/utils/prompt.mjs`
 
 #### 实现步骤
+
 1. 定义默认文档范围和硬规则数组。
 2. 实现 docs 范围解析和未知值错误。
 3. 将 extra 原样追加到 prompt 末尾。
 
 #### 验收标准
+
 - [x] 硬规则不可被 extra 覆盖。
 - [x] prompt 长度超过上限时提示。
 
 #### 关联设计
+
 - spec.md 章节：AI prompt 构建
 - design.md 章节：4.2、6.3、9.1
 
@@ -134,24 +146,30 @@
 - **状态**: [x] 已完成
 
 #### 任务描述
+
 创建 `test/ai.test.mjs` 覆盖 prep 前置、Claude 存在和缺失 fallback。
 
 #### 输入
+
 - `specs/ai-workflow-orchestration/spec.md`
 
 #### 输出
+
 - `test/ai.test.mjs`
 
 #### 实现步骤
+
 1. mock `runPrep` 成功/失败。
 2. mock `hasCommand('claude')` true/false。
 3. 断言 Claude 缺失时打印 prompt 且 exit 0。
 
 #### 验收标准
+
 - [x] prep 失败时不调用 Claude。
 - [x] Claude 缺失时 fallback 打印 prompt。
 
 #### 关联设计
+
 - spec.md 章节：交互 AI 工作流
 - design.md 章节：4.2、8.2
 
@@ -164,27 +182,33 @@
 - **状态**: [x] 已完成
 
 #### 任务描述
+
 实现 `src/commands/ai.mjs`，编排 prep、prompt 和 Claude 启动/fallback。
 
 #### 输入
+
 - `test/ai.test.mjs`
 - `src/utils/prompt.mjs`
 - `src/commands/prep.mjs`
 
 #### 输出
+
 - `src/commands/ai.mjs`
 
 #### 实现步骤
+
 1. 校验 docs/extra 参数。
 2. 调用 `runPrep(options)`。
 3. 构建 prompt。
 4. Claude 可用时调用 `claude <prompt>`，缺失时打印 prompt。
 
 #### 验收标准
+
 - [x] prep 失败会中止。
 - [x] Claude 缺失时 exit 0。
 
 #### 关联设计
+
 - spec.md 章节：交互 AI 工作流
 - design.md 章节：6.1、8.2
 
@@ -197,24 +221,30 @@
 - **状态**: [x] 已完成
 
 #### 任务描述
+
 创建 `test/auto.test.mjs` 覆盖 dry-run、allowedTools 和危险命令限制。
 
 #### 输入
+
 - `specs/ai-workflow-orchestration/spec.md`
 
 #### 输出
+
 - `test/auto.test.mjs`
 
 #### 实现步骤
+
 1. 断言 `--dry-run` 不调用 Claude。
 2. 断言 allowedTools 不包含 git commit、rm、curl、wget、npm publish。
 3. 断言 auto 输出实验性提示。
 
 #### 验收标准
+
 - [x] dry-run 只打印命令计划。
 - [x] 危险工具不在白名单中。
 
 #### 关联设计
+
 - spec.md 章节：自动 AI 工作流
 - design.md 章节：8.1、9.2
 
@@ -227,27 +257,33 @@
 - **状态**: [x] 已完成
 
 #### 任务描述
+
 实现 `src/commands/auto.mjs` 并在 CLI 路由中接入 `ai` 和 `auto`。
 
 #### 输入
+
 - `test/auto.test.mjs`
 - `src/utils/prompt.mjs`
 
 #### 输出
+
 - `src/commands/auto.mjs`
 - 更新后的 `src/cli.mjs`
 
 #### 实现步骤
+
 1. 构造 Claude print mode 参数。
 2. 硬编码安全 allowedTools 白名单。
 3. dry-run 打印命令，不执行。
 4. 在 CLI 路由中接入 `ai` 和 `auto`。
 
 #### 验收标准
+
 - [x] auto 命令可 dry-run。
 - [x] CLI 路由识别 ai/auto。
 
 #### 关联设计
+
 - spec.md 章节：自动 AI 工作流
 - design.md 章节：4.2、6.1
 
@@ -260,26 +296,32 @@
 - **状态**: [x] 已完成
 
 #### 任务描述
+
 运行 prompt、ai、auto 测试和 dry-run 手动验证。
 
 #### 输入
+
 - `test/prompt.test.mjs`
 - `test/ai.test.mjs`
 - `test/auto.test.mjs`
 
 #### 输出
+
 - 测试结果
 
 #### 实现步骤
+
 1. 运行 AI 工作流相关测试。
 2. 执行 `node bin/docsync.mjs auto --dry-run`。
 3. 检查输出包含 allowedTools 和实验性提示。
 
 #### 验收标准
+
 - [x] 相关测试通过。
 - [x] auto dry-run 不启动 Claude。
 
 #### 关联设计
+
 - spec.md 章节：全部需求项
 - design.md 章节：8.1、8.2
 
@@ -368,6 +410,7 @@
 ---
 
 > **质量红线检查清单**
+>
 > - [x] 每个任务颗粒度符合"5分钟可实现"标准
 > - [x] 任务清单 100% 覆盖 spec.md 定义
 > - [x] 任务清单 100% 覆盖 design.md 定义

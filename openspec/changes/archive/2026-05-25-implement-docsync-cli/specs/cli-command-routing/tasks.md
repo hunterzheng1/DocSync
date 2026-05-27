@@ -79,25 +79,31 @@
 - **状态**: [x] 已完成
 
 #### 任务描述
+
 为通用参数解析创建 `test/args.test.mjs` 的测试骨架。
 
 #### 输入
+
 - `specs/cli-command-routing/spec.md`
 - `specs/cli-command-routing/design.md`
 
 #### 输出
+
 - `test/args.test.mjs`
 
 #### 实现步骤
+
 1. 引入 `node:test` 和 `node:assert/strict`。
 2. 添加布尔参数解析用例。
 3. 添加 `--cwd <path>` 带值参数解析用例。
 
 #### 验收标准
+
 - [x] 测试文件存在。
 - [x] 覆盖 `--force --backup` 和 `--cwd ./demo`。
 
 #### 关联设计
+
 - spec.md 章节：需求项：通用参数解析
 - design.md 章节：1.1、6.3
 
@@ -110,24 +116,30 @@
 - **状态**: [x] 已完成
 
 #### 任务描述
+
 实现 `src/utils/args.mjs`，输出结构化 options 和 rest。
 
 #### 输入
+
 - `test/args.test.mjs`
 
 #### 输出
+
 - `src/utils/args.mjs`
 
 #### 实现步骤
+
 1. 实现逐 token 扫描。
 2. 将 kebab flag 转为 camelCase。
 3. 对缺值参数抛出带 exitCode 2 的错误。
 
 #### 验收标准
+
 - [x] `parseArgs(["--force","--backup"])` 返回 true 布尔值。
 - [x] `parseArgs(["--cwd","./demo"])` 返回 cwd。
 
 #### 关联设计
+
 - spec.md 章节：需求项：通用参数解析
 - design.md 章节：6.3、8.1
 
@@ -140,24 +152,30 @@
 - **状态**: [x] 已完成
 
 #### 任务描述
+
 为 `src/cli.mjs` 的默认 help、已知命令和未知命令创建测试骨架。
 
 #### 输入
+
 - `specs/cli-command-routing/spec.md`
 
 #### 输出
+
 - `test/cli.test.mjs`
 
 #### 实现步骤
+
 1. 准备捕获 stdout/stderr 的测试辅助。
 2. 添加空 argv 默认 help 用例。
 3. 添加未知命令 exit 1 用例。
 
 #### 验收标准
+
 - [x] 覆盖默认帮助场景。
 - [x] 覆盖未知命令场景。
 
 #### 关联设计
+
 - spec.md 章节：需求项：命令路由
 - design.md 章节：4.2、6.1
 
@@ -170,25 +188,31 @@
 - **状态**: [x] 已完成
 
 #### 任务描述
+
 实现 `src/cli.mjs` 的 command 识别、options 解析和 handler 分发。
 
 #### 输入
+
 - `test/cli.test.mjs`
 - `src/utils/args.mjs`
 
 #### 输出
+
 - `src/cli.mjs`
 
 #### 实现步骤
+
 1. 定义 command 到 handler 的映射。
 2. 将空 command 归一为 `help`。
 3. 对未知 command 输出错误和 help。
 
 #### 验收标准
+
 - [x] `main([])` 等价 help。
 - [x] `main(["unknown"])` 返回或设置失败状态。
 
 #### 关联设计
+
 - spec.md 章节：需求项：命令路由
 - design.md 章节：4.2、6.1
 
@@ -201,24 +225,30 @@
 - **状态**: [x] 已完成
 
 #### 任务描述
+
 为 bin 入口、help 输出和 version 输出创建测试或可执行断言骨架。
 
 #### 输入
+
 - `specs/cli-command-routing/spec.md`
 
 #### 输出
+
 - `test/bin.test.mjs`
 
 #### 实现步骤
+
 1. 使用 `node:child_process` 准备执行入口的辅助函数。
 2. 添加 `node bin/docsync.mjs help` 退出码 0 用例。
 3. 添加 version alias 用例。
 
 #### 验收标准
+
 - [x] 测试覆盖 bin 入口。
 - [x] 测试覆盖 `version/-v/--version`。
 
 #### 关联设计
+
 - spec.md 章节：需求项：npm CLI 包入口
 - design.md 章节：2.2、4.2
 
@@ -231,27 +261,33 @@
 - **状态**: [x] 已完成
 
 #### 任务描述
+
 创建 npm manifest、bin 入口、help 和 version 命令模块。
 
 #### 输入
+
 - `test/bin.test.mjs`
 
 #### 输出
+
 - `package.json`
 - `bin/docsync.mjs`
 - `src/commands/help.mjs`
 - `src/commands/version.mjs`
 
 #### 实现步骤
+
 1. 创建 `package.json` 的 `type`、`bin`、`engines` 基础字段。
 2. 创建带 shebang 的 `bin/docsync.mjs`。
 3. 实现 help/version 输出。
 
 #### 验收标准
+
 - [x] bin 文件以 `#!/usr/bin/env node` 开头。
 - [x] help 输出包含全部一级命令。
 
 #### 关联设计
+
 - spec.md 章节：需求项：npm CLI 包入口
 - design.md 章节：2.2、4.2
 
@@ -264,26 +300,32 @@
 - **状态**: [x] 已完成
 
 #### 任务描述
+
 运行路由相关测试和基本手动命令。
 
 #### 输入
+
 - `test/args.test.mjs`
 - `test/cli.test.mjs`
 - `test/bin.test.mjs`
 
 #### 输出
+
 - 测试结果
 
 #### 实现步骤
+
 1. 运行 `npm test -- --run test/args.test.mjs test/cli.test.mjs test/bin.test.mjs`。
 2. 运行 `node bin/docsync.mjs help`。
 3. 运行 `node bin/docsync.mjs version`。
 
 #### 验收标准
+
 - [x] 相关测试通过。
 - [x] help/version 手动命令退出码为 0。
 
 #### 关联设计
+
 - spec.md 章节：全部需求项
 - design.md 章节：8.1、9.2
 
@@ -375,6 +417,7 @@
 ---
 
 > **质量红线检查清单**
+>
 > - [x] 每个任务颗粒度符合"5分钟可实现"标准
 > - [x] 任务清单 100% 覆盖 spec.md 定义
 > - [x] 任务清单 100% 覆盖 design.md 定义
