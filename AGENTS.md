@@ -10,15 +10,8 @@ DocSync 是一个可通过 npm 发布的 CLI 工具（`@hunterzheng/docsync`）�
 
 | 命令 | 子命令 | 用途 |
 |------|--------|------|
-| `npx @hunterzheng/docsync` | - | npx 无参数引导入口（交互式 AI 工具选择 + 工作区创建） |
+| `npx @hunterzheng/docsync` | - | npx 无参数引导入口（交互式引导 + 工作区创建） |
 | `docsync sync` | `--fast` / `[file...]` | 文档同步（完整模式 / 快速模式 / 指定文件） |
-| `docsync init` | - | 在项目中安全初始化模板文件（legacy，推荐用 npx） |
-| `docsync prep` | - | 准备项目上下文（init → git 状态 → repomix → markdownlint） |
-| `docsync ai` | - | 启动交互式文档同步（Claude Code） |
-| `docsync auto` | - | 非交互式文档同步（实验性，保守权限） |
-| `docsync doctor` | - | 检查本地环境和工具安装状态 |
-| `docsync skill` | install / update / path | 管理 Claude Code Skill 文件 |
-| `docsync codex` | install / update / path | 管理 Codex 全局 AGENTS.md 规则 |
 | `docsync version` | - | 显示版本号 |
 | `docsync help` | - | 显示帮助信息 |
 

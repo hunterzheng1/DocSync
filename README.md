@@ -4,7 +4,7 @@
 
 ## 安装与使用
 
-### 方式一：npx 临时使用（推荐，快速上手）
+### 方式一：npx 临时使用（推荐）
 
 ```bash
 npx @hunterzheng/docsync
@@ -39,32 +39,10 @@ npm i -D @hunterzheng/docsync
 | `/docsync:rules` | 维护 override 规则（管理 `.docsync/rules/override.md`） |
 | `/docsync:rules show` | 查看当前 override 规则完整内容 |
 | `/docsync:doctor` | 环境诊断（工具/文件检查） |
-| `/docsync:prep` | 上下文准备（生成 repomix 文件） |
 
 全程无需在终端手动执行任何 CLI 命令。
 
 ## 命令详细说明
-
-### docsync doctor
-
-检查本地环境和工具安装状态，输出每个工具的已安装/未安装状态。
-
-**检查项目：**
-
-- 必需：Node.js、npm、git
-- 推荐：repomix（生成项目上下文）、markdownlint-cli2（Markdown 格式修复）
-- 可选：claude（Claude Code）、codex（Codex）、gh（GitHub CLI）
-- 全局文件：Claude Code 全局 Skill 路径、Codex 全局 AGENTS.md 路径
-
-**示例：**
-
-```bash
-docsync doctor              # 简洁输出
-docsync doctor --verbose    # 详细输出（含版本号）
-docsync doctor --quiet      # 只输出缺失项
-```
-
----
 
 ### docsync sync
 
@@ -86,158 +64,6 @@ docsync sync --fast                    # 快速同步
 docsync sync README.md                 # 仅同步 README.md
 docsync sync README.md AGENTS.md       # 同步指定文件
 docsync sync --cwd /path/to/project    # 指定目标目录
-```
-
----
-
-### docsync init
-
-在项目中安全安装模板文件。默认不覆盖已有文件，可通过 `--force` 强制覆盖。
-
-**安装的模板文件：**
-
-| 文件 | 用途 |
-|------|------|
-| `repomix.config.json` | Repomix 配置文件，定义代码上下文打包规则 |
-| `.repomixignore` | Repomix 忽略规则，排除不需要打包的文件 |
-| `.markdownlint-cli2.jsonc` | markdownlint 配置，定义 Markdown 格式规范 |
-| `docs/doc-sync-rules.md` | 文档同步规则，定义各文档文件的职责和编写原则 |
-
-**示例：**
-
-```bash
-docsync init                          # 默认模式：不覆盖已有文件
-docsync init --force                  # 强制覆盖已有文件
-docsync init --backup                 # 覆盖前生成 .bak.<timestamp> 备份
-docsync init --dry-run                # 只打印计划动作，不实际写入
-docsync init --cwd /path/to/project   # 指定目标目录
-```
-
----
-
-### docsync prep
-
-准备文档同步所需的项目上下文。按顺序执行以下步骤：
-
-1. **init**：确保模板文件存在（可通过 `--no-init` 跳过）
-2. **git status**：输出当前 git 状态摘要
-3. **repomix**：生成 `repomix-output.xml` 文件，包含项目全部代码和文档的上下文
-4. **markdownlint**：修复 Markdown 格式问题（可通过 `--no-lint` 跳过）
-
-生成的 `repomix-output.xml` 是 AI 理解项目全貌的关键输入。
-
-**示例：**
-
-```bash
-docsync prep                          # 完整执行
-docsync prep --compress               # 压缩输出（减少文件大小）
-docsync prep --no-init                # 跳过 init 步骤
-docsync prep --no-lint                # 跳过 markdownlint 步骤
-docsync prep --dry-run                # 只打印计划动作
-```
-
----
-
-### docsync ai（legacy）
-
-启动交互式文档同步（旧版）。推荐使用 npx 引导后的 `/docsync:sync` 代替。
-
-1. **运行 prep**：先生成项目上下文（repomix-output.xml）
-2. **构建同步 prompt**：生成一段包含文档同步规则的 prompt，指导 AI 如何更新文档
-3. **启动 Claude Code**：将 prompt 传递给 Claude Code，由其自动读取项目上下文并更新文档
-
-**如果本地没有安装 Claude Code**，会输出可复制的 prompt 文本，你可以手动粘贴到 Claude 中使用。
-
-**可更新的文档范围：** `README.md`、`AGENTS.md`、`CLAUDE.md`（默认全部更新）。
-
-**示例：**
-
-```bash
-docsync ai                                    # 同步所有文档，启动 Claude Code
-docsync ai --docs readme,agents               # 只同步 README.md 和 AGENTS.md
-docsync ai --compress                         # 使用压缩模式生成上下文
-docsync ai --no-lint                          # 跳过 markdownlint 格式修复
-docsync ai --extra "特别注意：更新安装说明部分" # 附加额外要求到同步 prompt
-```
-
-**同步规则（AI 必须遵守）：**
-
-1. 最小化变更：只更新需要的内容，不重写整篇文档
-2. 禁止编造：所有命令、端口、环境变量必须来自仓库事实
-3. 标记不确定内容：使用 `TODO(review)` 标注
-4. 保持简洁：避免重复和过时信息
-5. 禁止读取或输出密钥、token、凭证
-6. 禁止执行 `git commit`、`git push`、`npm publish`
-
----
-
-### docsync auto（legacy）
-
-非交互式文档同步（实验性）。与 `docsync ai` 的区别：
-
-- `docsync ai`：启动 Claude Code 交互式会话，用户可以随时干预
-- `docsync auto`：非交互模式，适合自动化流程或 CI/CD 场景
-
-**示例：**
-
-```bash
-docsync auto                              # 非交互式同步
-docsync auto --extra "更新命令参考部分"    # 附加额外要求
-```
-
----
-
-### docsync skill
-
-管理 Claude Code 的全局或项目级 Skill 文件（位于 `~/.claude/skills/doc-sync/SKILL.md` 或 `<项目>/.claude/skills/doc-sync/SKILL.md`）。
-
-**子命令：**
-
-| 子命令 | 用途 |
-|--------|------|
-| `install` | 安装 Skill 文件到目标位置 |
-| `update` | 更新 Skill 文件模板内容 |
-| `path` | 输出 Skill 文件的目标路径 |
-
-**示例：**
-
-```bash
-docsync skill install                         # 安装到全局（默认）
-docsync skill install --project               # 安装到当前项目
-docsync skill install --cwd /path/to/project  # 安装到指定项目
-docsync skill update                          # 更新 Skill 内容
-docsync skill path --global                   # 输出全局路径
-docsync skill path --project                  # 输出项目路径
-```
-
----
-
-### docsync codex
-
-管理 Codex 的全局 AGENTS.md 规则片段。通过 **标记块（marker block）** 机制，在保留用户已有内容的前提下，插入/更新 DocSync 的规则片段。
-
-标记块格式：
-
-```markdown
-<!-- DOCSYNC_START: doc-sync rules -->
-... DocSync 规则内容 ...
-<!-- DOCSYNC_END -->
-```
-
-**子命令：**
-
-| 子命令 | 用途 |
-|--------|------|
-| `install` | 在 Codex 全局 AGENTS.md 中插入 DocSync 规则 |
-| `update` | 更新标记块内的规则内容 |
-| `path` | 输出 AGENTS.md 的目标路径 |
-
-**示例：**
-
-```bash
-docsync codex install                       # 安装 DocSync 规则到全局 AGENTS.md
-docsync codex update                        # 更新已有标记块内容
-docsync codex path                          # 输出全局 AGENTS.md 路径
 ```
 
 ---

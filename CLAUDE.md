@@ -10,7 +10,7 @@ DocSync 是一个可通过 npm 发布的 CLI 工具，用于协调 Repomix、mar
 - **运行环境**：Node.js >= 18，ESM 模块格式
 - **CLI 入口**：`bin/docsync.mjs`（npx 无参数默认行为）
 - **命令分发**：`src/cli.mjs`
-- **核心模块**：`src/core/`（environment, workspace, rules, context, sync-plan, protected-content, transaction）
+- **核心模块**：`src/core/`（environment, workspace, rules, context, sync-plan, protected-content, transaction, adapters）
 - **AI 指令**：`/docsync:init`、`/docsync:sync`、`/docsync:rules`（通过 Claude Skill 模板实现）
 
 ## 常用命令
@@ -28,13 +28,6 @@ npx @hunterzheng/docsync help     # 查看所有命令
 docsync sync                      # 文档同步（完整模式，默认）
 docsync sync --fast               # 快速同步（使用 git 事实）
 docsync sync README.md            # 同步指定文件
-docsync doctor                    # 检查环境状态
-docsync init                      # 初始化项目模板（legacy，推荐用 npx）
-docsync prep                      # 准备文档同步上下文
-docsync ai                        # 启动交互式文档同步
-docsync auto                      # 非交互式文档同步（实验性）
-docsync skill                     # 管理 Claude Code Skill 文件
-docsync codex                     # 管理 Codex 全局规则文件
 ```
 
 ### AI Slash 命令（bootstrap 后）
@@ -132,13 +125,10 @@ DocSync/
 ├── bin/docsync.mjs          # CLI 入口（npx 默认行为）
 ├── src/
 │   ├── cli.mjs              # 命令分发核心
-│   ├── commands/            # 各子命令实现（init, prep, ai, sync, help 等）
+│   ├── commands/            # 各子命令实现（sync, help, version）
 │   └── utils/               # 工具函数（fs, git, shell, paths, args, logger, prompt）
-├── core/                    # 核心模块（environment, workspace, rules, context, sync-plan 等）
-├── templates/               # 模板资产
-│   ├── project/             # 项目配置模板
-│   ├── claude-skill/        # Claude Skill 模板
-│   └── codex/               # Codex AGENTS 模板
+├── core/                    # 核心模块（environment, workspace, rules, context, sync-plan, protected-content, transaction, adapters）
+├── templates/project/       # 项目配置模板
 ├── test/                    # 单元测试
 ├── openspec/                # SDD 规格文档
 │   ├── specs/               # 正式规格（归档后同步至此）

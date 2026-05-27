@@ -14,17 +14,3 @@ describe('prompt utils', () => {
     assert.ok(result.length > 0);
   });
 });
-
-describe('ai command', () => {
-  it('ai command can be imported', async () => {
-    const mod = await import('../src/commands/ai.mjs');
-    assert.equal(typeof mod.runAi, 'function');
-  });
-});
-
-describe('auto command', () => {
-  it('auto command can be imported', async () => {
-    const mod = await import('../src/commands/auto.mjs');
-    assert.equal(typeof mod.runAuto, 'function');
-  });
-});

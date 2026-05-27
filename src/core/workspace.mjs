@@ -1,7 +1,5 @@
 import { mkdirSync, writeFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
-import { getTemplateRoot } from '../utils/paths.mjs';
-import { readText } from '../utils/fs.mjs';
 
 const WORKSPACE_STRUCTURE = [
   'config',
@@ -63,23 +61,6 @@ export async function createWorkspace(cwd = process.cwd()) {
     }
   }
 
-  // Copy templates
-  const templateRoot = getTemplateRoot();
-  const templateFiles = [
-    { src: 'project/README.md', dest: 'templates/README.template.md' },
-    { src: 'project/AGENTS.md', dest: 'templates/AGENTS.template.md' },
-    { src: 'project/CLAUDE.md', dest: 'templates/CLAUDE.template.md' },
-  ];
-
-  for (const tpl of templateFiles) {
-    const srcPath = join(templateRoot, tpl.src);
-    const destPath = join(docsyncDir, tpl.dest);
-    if (existsSync(srcPath) && !existsSync(destPath)) {
-      const content = readText(srcPath);
-      writeFileSync(destPath, content, 'utf8');
-      filesCreated.push(`.docsync/${tpl.dest}`);
-    }
-  }
 
   return filesCreated;
 }
