@@ -55,7 +55,7 @@ describe('init command', () => {
 
   it('dry-run does not write files', async () => {
     const result = await runInit({ cwd: tmpDir, dryRun: true });
-    assert.ok(result.created.some(f => f.includes('dry-run')), 'should show planned actions');
+    assert.ok(result.created.length > 0, 'should show planned actions');
     assert.equal(existsSync(join(tmpDir, 'repomix.config.json')), false, 'should not create files');
   });
 

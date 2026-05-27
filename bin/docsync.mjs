@@ -4,8 +4,17 @@ import { main } from '../src/cli.mjs';
 import { CliError } from '../src/utils/args.mjs';
 
 (async () => {
+  const args = process.argv.slice(2);
+
+  // No parameter → npx bootstrap entry point
+  if (args.length === 0) {
+    const { runInit } = await import('../src/commands/init.mjs');
+    await runInit({});
+    return;
+  }
+
   try {
-    await main(process.argv.slice(2));
+    await main(args);
     process.exitCode = process.exitCode || 0;
   } catch (err) {
     if (err instanceof CliError) {

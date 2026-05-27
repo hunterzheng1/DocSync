@@ -46,3 +46,17 @@ export function buildPrompt(options = {}) {
     extra ? `ADDITIONAL REQUIREMENTS:\n${extra}` : '',
   ].filter(Boolean).join('\n');
 }
+
+export async function prompt(question) {
+  const readline = await import('node:readline');
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+  });
+  return new Promise((resolve) => {
+    rl.question(question, (answer) => {
+      rl.close();
+      resolve(answer);
+    });
+  });
+}
