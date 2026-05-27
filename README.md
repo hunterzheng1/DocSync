@@ -22,7 +22,6 @@ npx 首次运行会自动下载并启动交互式引导，完成环境检查、`
 | `/docsync:sync [file]` | 同步指定文件，如 `README.md` |
 | `/docsync:rules` | 维护 override 规则（管理 `.docsync/rules/override.md`） |
 | `/docsync:rules show` | 查看当前 override 规则完整内容 |
-| `/docsync:doctor` | 环境诊断（工具/文件检查） |
 
 全程无需在终端手动执行任何 CLI 命令。
 

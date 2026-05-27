@@ -126,8 +126,8 @@ DocSync/
 ├── src/
 │   ├── cli.mjs              # 命令分发核心
 │   ├── commands/            # 各子命令实现（sync, help, version）
+│   ├── core/                # 核心模块（environment, workspace, rules, context, sync-plan, protected-content, transaction, adapters）
 │   └── utils/               # 工具函数（fs, git, shell, paths, args, logger, prompt）
-├── core/                    # 核心模块（environment, workspace, rules, context, sync-plan, protected-content, transaction, adapters）
 ├── templates/project/       # 项目配置模板
 ├── test/                    # 单元测试
 ├── openspec/                # SDD 规格文档
