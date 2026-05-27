@@ -125,9 +125,9 @@ export async function updateLastSync(cwd, report) {
   const state = {
     lastSyncAt: new Date().toISOString(),
     mode: report.mode,
-    updatedFiles: report.updated,
-    skippedFiles: report.skipped,
-    factsUsed: report.factsUsed,
+    updatedFiles: report.updated_files,
+    skippedFiles: report.skipped_files,
+    factsUsed: report.facts_used,
   };
 
   await writeText(lastSyncPath, JSON.stringify(state, null, 2));
@@ -157,7 +157,7 @@ export async function syncFull(cwd, targets = []) {
 
   // 6. Compute actual edits for each target
   const edits = [];
-  for (const targetDoc of plan.updated) {
+  for (const targetDoc of plan.updated_files) {
     const edit = computeEdits(facts, rules, targetDoc);
     if (edit.action === 'create' || edit.action === 'update') {
       // Check protected content before adding to edits
@@ -165,9 +165,9 @@ export async function syncFull(cwd, targets = []) {
         checkProtectedContent([{ file: targetDoc, content: edit.content }], protectedSections);
         edits.push({ file: targetDoc, newContent: edit.content });
       } catch (err) {
-        plan.skipped.push({ file: targetDoc, reason: `protected content conflict: ${err.message}` });
-        plan.updated = plan.updated.filter(f => f !== targetDoc);
-        plan.todoReview.push(`Protected content conflict in ${targetDoc}`);
+        plan.skipped_files.push({ file: targetDoc, reason: `protected content conflict: ${err.message}` });
+        plan.updated_files = plan.updated_files.filter(f => f !== targetDoc);
+        plan.todo_review.push(`Protected content conflict in ${targetDoc}`);
       }
     }
   }
@@ -187,22 +187,22 @@ export async function syncFull(cwd, targets = []) {
         checkProtectedContent(editsToValidate, protectedSections);
       });
     } catch (err) {
-      plan.todoReview.push(`Transaction failed: ${err.message}`);
+      plan.todo_review.push(`Transaction failed: ${err.message}`);
       return { ...plan, verification: 'transaction failed' };
     }
   }
 
   // 8. Run markdown fix on updated files
-  const fixedFiles = plan.updated.map(f => join(cwd, f));
+  const fixedFiles = plan.updated_files.map(f => join(cwd, f));
   const fixResult = await runMarkdownFix(cwd, fixedFiles);
 
   // 9. Build report
   const report = {
-    updated: plan.updated,
-    skipped: plan.skipped,
-    factsUsed: plan.factsUsed,
+    updated_files: plan.updated_files,
+    skipped_files: plan.skipped_files,
+    facts_used: plan.facts_used,
     mode: 'full',
-    todoReview: plan.todoReview,
+    todo_review: plan.todo_review,
     verification: fixResult.verification,
   };
 
@@ -268,15 +268,15 @@ export async function syncFast(cwd, targets = []) {
 
   // 9. Compute edits (fast mode — minimal changes)
   const edits = [];
-  for (const targetDoc of plan.updated) {
+  for (const targetDoc of plan.updated_files) {
     const edit = computeEdits(facts, rules, targetDoc);
     if (edit.action === 'create' || edit.action === 'update') {
       try {
         checkProtectedContent([{ file: targetDoc, content: edit.content }], protectedSections);
         edits.push({ file: targetDoc, newContent: edit.content });
       } catch (err) {
-        plan.skipped.push({ file: targetDoc, reason: `protected content conflict: ${err.message}` });
-        plan.updated = plan.updated.filter(f => f !== targetDoc);
+        plan.skipped_files.push({ file: targetDoc, reason: `protected content conflict: ${err.message}` });
+        plan.updated_files = plan.updated_files.filter(f => f !== targetDoc);
       }
     }
   }
@@ -296,21 +296,21 @@ export async function syncFast(cwd, targets = []) {
         checkProtectedContent(editsToValidate, protectedSections);
       });
     } catch (err) {
-      plan.todoReview.push(`Transaction failed: ${err.message}`);
+      plan.todo_review.push(`Transaction failed: ${err.message}`);
     }
   }
 
   // 11. Run markdown fix
-  const fixedFiles = plan.updated.map(f => join(cwd, f));
+  const fixedFiles = plan.updated_files.map(f => join(cwd, f));
   const fixResult = await runMarkdownFix(cwd, fixedFiles);
 
   // 12. Build report
   const report = {
-    updated: plan.updated,
-    skipped: plan.skipped,
-    factsUsed: plan.factsUsed,
+    updated_files: plan.updated_files,
+    skipped_files: plan.skipped_files,
+    facts_used: plan.facts_used,
     mode: 'fast',
-    todoReview: plan.todoReview,
+    todo_review: plan.todo_review,
     verification: fixResult.verification,
   };
 
@@ -382,28 +382,28 @@ function printReport(report) {
   process.stdout.write('\n=== Sync Report ===\n');
   process.stdout.write(`Mode: ${report.mode}\n`);
 
-  if (report.updated.length > 0) {
-    process.stdout.write(`\nUpdated (${report.updated.length}):\n`);
-    for (const f of report.updated) {
+  if (report.updated_files.length > 0) {
+    process.stdout.write(`\nUpdated (${report.updated_files.length}):\n`);
+    for (const f of report.updated_files) {
       process.stdout.write(`  ✓ ${f}\n`);
     }
   }
 
-  if (Array.isArray(report.skipped) && report.skipped.length > 0) {
-    process.stdout.write(`\nSkipped (${report.skipped.length}):\n`);
-    for (const item of report.skipped) {
+  if (Array.isArray(report.skipped_files) && report.skipped_files.length > 0) {
+    process.stdout.write(`\nSkipped (${report.skipped_files.length}):\n`);
+    for (const item of report.skipped_files) {
       const reason = typeof item === 'string' ? item : `${item.file}: ${item.reason}`;
       process.stdout.write(`  - ${reason}\n`);
     }
   }
 
-  if (report.factsUsed.length > 0) {
-    process.stdout.write(`\nFacts used: ${report.factsUsed.join(', ')}\n`);
+  if (report.facts_used.length > 0) {
+    process.stdout.write(`\nFacts used: ${report.facts_used.join(', ')}\n`);
   }
 
-  if (report.todoReview && report.todoReview.length > 0) {
+  if (report.todo_review && report.todo_review.length > 0) {
     process.stdout.write(`\nTODO Review:\n`);
-    for (const item of report.todoReview) {
+    for (const item of report.todo_review) {
       process.stdout.write(`  ⚠ ${item}\n`);
     }
   }

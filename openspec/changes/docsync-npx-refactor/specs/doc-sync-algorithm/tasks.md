@@ -84,9 +84,9 @@
 
 #### 验收标准
 
-- [ ] git 状态正确输出到指定路径
-- [ ] Repomix 输出文件已生成
-- [ ] 文档清单已扫描并生成 JSON
+- [x] git 状态正确输出到指定路径
+- [x] Repomix 输出文件已生成
+- [x] 文档清单已扫描并生成 JSON
 
 ---
 
@@ -110,9 +110,9 @@
 
 #### 验收标准
 
-- [ ] 默认规则正确加载
-- [ ] override 规则（如果存在）正确加载
-- [ ] 解析为结构化对象
+- [x] 默认规则正确加载
+- [x] override 规则（如果存在）正确加载
+- [x] 解析为结构化对象
 
 ---
 
@@ -136,9 +136,9 @@ override.md 中的 ProtectedContent 区域
 
 #### 验收标准
 
-- [ ] protected content 正确解析
-- [ ] 编辑与 protected content 无冲突时返回 OK
-- [ ] 编辑与 protected content 冲突时抛出 ProtectedContentViolation
+- [x] protected content 正确解析
+- [x] 编辑与 protected content 无冲突时返回 OK
+- [x] 编辑与 protected content 冲突时抛出 ProtectedContentViolation
 
 ---
 
@@ -162,9 +162,9 @@ override.md 中的 ProtectedContent 区域
 
 #### 验收标准
 
-- [ ] 仓库事实正确提取
-- [ ] 最小编辑方案正确生成
-- [ ] 支持 full 和 fast 两种模式
+- [x] 仓库事实正确提取
+- [x] 最小编辑方案正确生成
+- [x] 支持 full 和 fast 两种模式
 
 ---
 
@@ -188,9 +188,9 @@ override.md 中的 ProtectedContent 区域
 
 #### 验收标准
 
-- [ ] 临时文件正确写入
-- [ ] protected content 检查通过后原子落盘
-- [ ] 检查失败时回滚并清理临时文件
+- [x] 临时文件正确写入
+- [x] protected content 检查通过后原子落盘
+- [x] 检查失败时回滚并清理临时文件
 
 ---
 
@@ -206,8 +206,8 @@ override.md 中的 ProtectedContent 区域
 
 #### 验收标准
 
-- [ ] 完整同步流程正确执行
-- [ ] 同步报告正确输出
+- [x] 完整同步流程正确执行
+- [x] 同步报告正确输出
 
 ---
 
@@ -223,8 +223,8 @@ override.md 中的 ProtectedContent 区域
 
 #### 验收标准
 
-- [ ] 快速同步流程正确执行
-- [ ] 信息不足时正确升级为完整同步
+- [x] 快速同步流程正确执行
+- [x] 信息不足时正确升级为完整同步
 
 ---
 
@@ -251,9 +251,9 @@ override.md 中的 ProtectedContent 区域
 
 ### 4.3 手动验证清单
 
-- [ ] 执行 /docsync:sync 能正确同步文档
-- [ ] 执行 /docsync:sync --fast 能快速更新
-- [ ] Protected content 不被误删
+- [x] 执行 /docsync:sync 能正确同步文档
+- [x] 执行 /docsync:sync --fast 能快速更新
+- [x] Protected content 不被误删
 
 ---
 

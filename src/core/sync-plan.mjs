@@ -38,18 +38,18 @@ export async function extractFacts(cwd = process.cwd()) {
 
 export async function generateSyncPlan(targets, facts, rules, mode = 'full', cwd = process.cwd()) {
   const plan = {
-    updated: [],
-    skipped: [],
-    factsUsed: [],
+    updated_files: [],
+    skipped_files: [],
+    facts_used: [],
     mode,
-    todoReview: [],
+    todo_review: [],
   };
 
   // Track which facts were used
-  if (facts.packageName) plan.factsUsed.push('package.json name');
-  if (facts.scripts) plan.factsUsed.push('package.json scripts');
-  if (rules.override) plan.factsUsed.push('.docsync/rules/override.md');
-  if (rules.default) plan.factsUsed.push('.docsync/rules/default.md');
+  if (facts.packageName) plan.facts_used.push('package.json name');
+  if (facts.scripts) plan.facts_used.push('package.json scripts');
+  if (rules.override) plan.facts_used.push('.docsync/rules/override.md');
+  if (rules.default) plan.facts_used.push('.docsync/rules/default.md');
 
   const docFiles = [
     { name: 'README.md', content: facts.readme },
@@ -60,13 +60,13 @@ export async function generateSyncPlan(targets, facts, rules, mode = 'full', cwd
   for (const doc of docFiles) {
     if (!doc.content) {
       // Document doesn't exist, will be created
-      plan.updated.push(doc.name);
+      plan.updated_files.push(doc.name);
       continue;
     }
 
     // For now, mark as updated if changes are needed
     // The actual edit computation would be done by the AI during sync
-    plan.updated.push(doc.name);
+    plan.updated_files.push(doc.name);
   }
 
   return plan;
