@@ -14,6 +14,7 @@ export function printHelp() {
     '  doctor    Check local environment and tool status',
     '  skill     Manage Claude Code Skill files',
     '  codex     Manage Codex global rule files',
+    '  sync      Document sync (full or fast mode)',
     '  version   Show package version',
     '  help      Show this help message',
     '',

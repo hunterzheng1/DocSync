@@ -4,7 +4,7 @@ import { runVersion } from './commands/version.mjs';
 
 const COMMANDS = new Set([
   'init', 'prep', 'ai', 'auto', 'doctor',
-  'skill', 'codex', 'version', 'help',
+  'skill', 'codex', 'version', 'help', 'sync',
 ]);
 
 export async function main(argv) {
@@ -71,6 +71,13 @@ export async function main(argv) {
         return;
       }
       await runCodex(subcommand, options);
+      break;
+    }
+    case 'sync': {
+      const { runSync } = await import('./commands/sync.mjs');
+      const targets = rest.filter(arg => !arg.startsWith('--'));
+      const fast = rest.includes('--fast');
+      await runSync({ ...options, targets, fast });
       break;
     }
     default:

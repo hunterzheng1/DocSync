@@ -69,6 +69,7 @@ which markdownlint-cli2
 | CLAUDE.md | Claude Code | 项目概览、常用命令、开发规范、目录结构 |
 
 **硬性规则：**
+
 1. 最小化变更：只更新需要的内容，不重写整篇文档
 2. 禁止编造：所有命令、端口、环境变量必须来自仓库事实
 3. 标记不确定内容：使用 `TODO(review)` 标注
@@ -90,20 +91,24 @@ which markdownlint-cli2
 使用 **Bash** 检查工具，**Read** 检查文件：
 
 **必需工具：**
+
 - `node --version`
 - `npm --version`
 - `git --version`
 
 **推荐工具：**
+
 - `which repomix`
 - `which markdownlint-cli2`
 
 **可选工具：**
+
 - `which claude`
 - `which codex`
 - `which gh`
 
 **全局文件：**
+
 - `~/.claude/skills/doc-sync/SKILL.md`
 - `~/.codex/AGENTS.md`
 

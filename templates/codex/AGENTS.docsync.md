@@ -10,6 +10,7 @@
 DocSync (`@hunterzheng/docsync`) 是一个可通过 npm 发布的 CLI 工具，用于协调 Repomix、markdownlint、Claude Skill、Codex 规则和 AI 文档同步工作流。它管理 3 个核心文档：`README.md`、`AGENTS.md`、`CLAUDE.md`。
 
 ### DocSync 做什么
+
 - 安装项目模板配置（repomix、markdownlint、文档规则）
 - 生成项目上下文文件（repomix-output.xml）供 AI 读取
 - 诊断本地环境和工具安装状态
@@ -17,6 +18,7 @@ DocSync (`@hunterzheng/docsync`) 是一个可通过 npm 发布的 CLI 工具，�
 - 安装/更新 Claude Code Skill 和 Codex 全局规则
 
 ### DocSync 不做什么
+
 - 不调用 LLM API
 - 不修改业务代码
 - 不自动执行 `git commit` / `git push` / `npm publish`
@@ -24,12 +26,14 @@ DocSync (`@hunterzheng/docsync`) 是一个可通过 npm 发布的 CLI 工具，�
 - 不上传源码到第三方服务
 
 ### 何时使用 DocSync
+
 - 代码结构、依赖、命令、测试发生重大变化后
 - 新增/删除模块、API、Agent 规则后
 - CI/CD 流程变更后
 - 项目文档明显落后于代码事实
 
 ### 何时不应使用 DocSync
+
 - 没有实质性的代码或配置变更
 - 只修改了无关紧要的文件
 - 正在活跃调试中（等稳定状态后再同步）
