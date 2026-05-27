@@ -26,13 +26,15 @@ Update project documentation with minimal factual edits.
 
 1. Inspect current git changes (\`git status --short\`, \`git diff --stat\`).
 2. Read README.md, AGENTS.md, CLAUDE.md.
-3. Inspect build/test/lint commands from project files.
-4. Apply minimal documentation patches.
-5. Run markdownlint if available.
-6. Return changed sections and validation evidence.
+3. Generate context: \`repomix --config .docsync/config/repomix.config.json --ignore-file .docsync/config/repomixignore\`
+4. Inspect build/test/lint commands from project files.
+5. Apply minimal documentation patches.
+6. Run markdownlint: \`markdownlint-cli2 --config .docsync/config/markdownlint-cli2.jsonc\`
+7. Return changed sections and validation evidence.
 
 ## Rules
 
+- All DocSync config files are in \`.docsync/config/\` — do not create root-level config.
 - Do not invent commands, ports, env vars, APIs, modules, credentials, or deployment steps.
 - Prefer small patches over rewrites.
 - Keep AGENTS.md as cross-agent source of truth.

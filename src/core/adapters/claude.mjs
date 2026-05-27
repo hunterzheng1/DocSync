@@ -35,6 +35,14 @@ Update project documentation with minimal factual edits.
 1. 检查 \`.docsync/state/install.json\` 是否存在。缺失则提示：\`ERR_NO_INSTALL: 未完成引导安装。请先运行 npx @hunterzheng/docsync 初始化。\`
 2. 检查 \`.docsync/config/\`、\`.docsync/context/\`、\`.docsync/rules/\` 是否存在。缺失则提示：\`ERR_WORKSPACE_INCOMPLETE: .docsync/ 缺少必需子目录。请重新运行 npx 引导或 /docsync:init 修复。\`
 
+### 上下文准备
+
+\`\`\`bash
+repomix --config .docsync/config/repomix.config.json --ignore-file .docsync/config/repomixignore
+\`\`\`
+
+所有 Repomix 和 markdownlint 配置均位于 \`.docsync/config/\` 下，不污染项目根目录。
+
 ### 完整模式（默认）
 
 \`\`\`
@@ -52,6 +60,12 @@ npx @hunterzheng/docsync sync --fast [target1]
 \`\`\`
 
 使用轻量 git 事实推断影响范围。信息不足或高风险时自动升级为完整同步。
+
+### 格式修复
+
+\`\`\`bash
+markdownlint-cli2 --config .docsync/config/markdownlint-cli2.jsonc
+\`\`\`
 
 ### 同步规则
 

@@ -1,48 +1,13 @@
 import { join } from 'node:path';
-import { existsSync, writeFileSync, readFileSync } from 'node:fs';
-import { getCwd, getTemplateRoot } from '../utils/paths.mjs';
+import { existsSync, writeFileSync } from 'node:fs';
+import { getCwd } from '../utils/paths.mjs';
 import { checkAll, printCheckResults } from '../core/environment.mjs';
 import { createWorkspace, validateWorkspace } from '../core/workspace.mjs';
 import { installClaudeAdapter } from '../core/adapters/claude.mjs';
 import { installCodexAdapter } from '../core/adapters/codex.mjs';
 import { prompt } from '../utils/prompt.mjs';
-import { writeIfMissing } from '../utils/fs.mjs';
 
 const DOC_VERSION = '1.0.0';
-
-const TEMPLATE_FILES = [
-  'repomix.config.json',
-  '.repomixignore',
-  '.markdownlint-cli2.jsonc',
-  join('docs', 'doc-sync-rules.md'),
-];
-
-/**
- * Copy template files to project root.
- * Returns { created, skipped, overwritten } arrays.
- */
-async function copyTemplateFiles(cwd, options = {}) {
-  const { force = false, dryRun = false } = options;
-  const templateRoot = getTemplateRoot();
-  const results = { created: [], skipped: [], overwritten: [] };
-
-  for (const relPath of TEMPLATE_FILES) {
-    const srcPath = join(templateRoot, relPath);
-    const destPath = join(cwd, relPath);
-
-    if (!existsSync(srcPath)) continue;
-    const content = readFileSync(srcPath, 'utf8');
-    const result = await writeIfMissing(destPath, content, { force, dryRun });
-
-    if (result.action === 'created') results.created.push(destPath);
-    else if (result.action === 'skipped') results.skipped.push(destPath);
-    else if (result.action === 'overwritten') results.overwritten.push(destPath);
-    else if (result.action === 'overwrite-planned') results.overwritten.push(destPath);
-    else if (result.action === 'create-planned') results.created.push(destPath);
-  }
-
-  return results;
-}
 
 /**
  * Non-interactive initialization.
@@ -64,11 +29,8 @@ export async function runInit(options = {}) {
     return { created: [], skipped: [], overwritten: [] };
   }
 
-  // Create workspace directory
+  // Create workspace (directories + config files)
   const workspaceFiles = await createWorkspace(cwd);
-
-  // Copy template files to project root
-  const templateResults = await copyTemplateFiles(cwd, { force, dryRun });
 
   // Install adapters
   const installedFiles = [];
@@ -88,7 +50,7 @@ export async function runInit(options = {}) {
     installedAt: new Date().toISOString(),
     docsyncVersion: pkg.default.version,
     aiTool,
-    filesCreated: [...workspaceFiles, ...templateResults.created, ...installedFiles],
+    filesCreated: [...workspaceFiles, ...installedFiles],
     templateVersion: DOC_VERSION,
   };
 
@@ -102,15 +64,8 @@ export async function runInit(options = {}) {
     process.stdout.write('\nDocSync init complete.\n');
     process.stdout.write(`AI Tool: ${aiTool}\n`);
     process.stdout.write(`Workspace: .docsync/\n`);
-    process.stdout.write(`Created: ${templateResults.created.length + templateResults.overwritten.length} template files\n`);
-    process.stdout.write(`Skipped: ${templateResults.skipped.length} template files\n`);
+    process.stdout.write(`Created: ${workspaceFiles.length + installedFiles.length} files\n`);
   }
-
-  return {
-    created: templateResults.created,
-    skipped: templateResults.skipped,
-    overwritten: templateResults.overwritten,
-  };
 }
 
 /**
