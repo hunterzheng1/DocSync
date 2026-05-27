@@ -4,31 +4,15 @@
 
 ## 安装与使用
 
-### 方式一：npx 临时使用（推荐）
-
 ```bash
 npx @hunterzheng/docsync
 ```
 
 npx 首次运行会自动下载并启动交互式引导，完成环境检查、`.docsync/` 工作区创建、AI 适配器安装和三份核心文档初始化。
 
-### 方式二：全局安装
-
-```bash
-npm i -g @hunterzheng/docsync
-```
-
-安装后，在任意项目中打开 Claude Code，AI 会自动加载 DocSync Skill。输入 `/docsync:sync` 即可开始文档同步。
-
-### 方式三：项目级安装
-
-```bash
-npm i -D @hunterzheng/docsync
-```
-
 ### AI 驱动使用方式
 
-安装完成后，在 Claude Code 中通过以下 slash 命令完成文档同步：
+引导完成后，在 Claude Code 中通过以下 slash 命令完成文档同步：
 
 | Slash 命令 | 用途 |
 |-----------|------|
@@ -113,7 +97,7 @@ DocSync 管理的三个核心文档文件各有明确的职责分工：
 | 内容 | 说明 |
 |------|------|
 | 项目简介 | 一两句话说明项目做什么 |
-| 安装方式 | 如何安装（npm / npx / git clone） |
+| 安装方式 | 如何通过 npx 引导安装 |
 | 快速开始 | 最简使用示例 |
 | 命令参考 | 完整命令列表和参数说明 |
 | 开发指南 | 如何本地开发、运行测试 |
@@ -159,20 +143,6 @@ DocSync 管理的三个核心文档文件各有明确的职责分工：
 4. **保持简洁**：避免重复和过时信息
 5. **不读取密钥**：禁止读取或输出 `.env`、token、凭证文件
 6. **不执行危险操作**：禁止 `git commit`、`git push`、`npm publish`
-
-## 更新包
-
-已全局安装的用户，通过以下命令更新到最新版本：
-
-```bash
-npm i -g @hunterzheng/docsync
-```
-
-查看是否有可用更新：
-
-```bash
-npm outdated -g @hunterzheng/docsync
-```
 
 ## 开发
 
