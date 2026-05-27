@@ -6,10 +6,10 @@ import { CliError } from '../src/utils/args.mjs';
 (async () => {
   const args = process.argv.slice(2);
 
-  // No parameter → npx bootstrap entry point
+  // No parameter → npx bootstrap entry point (interactive AI tool selection)
   if (args.length === 0) {
-    const { runInit } = await import('../src/commands/init.mjs');
-    await runInit({});
+    const { runBootstrap } = await import('../src/commands/init.mjs');
+    await runBootstrap();
     return;
   }
 
