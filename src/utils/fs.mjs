@@ -1,4 +1,4 @@
-import { existsSync, readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+import { existsSync, readFileSync, writeFileSync, mkdirSync, readdirSync, statSync } from 'node:fs';
 import { dirname, basename, join } from 'node:path';
 
 export function exists(filePath) {
@@ -62,4 +62,47 @@ export async function writeIfMissing(filePath, content, options = {}) {
 
   await writeText(filePath, content);
   return { action: 'created', path: filePath };
+}
+
+/**
+ * Recursively copy a template directory to a target.
+ * Returns { created, skipped, updated }.
+ * Supports --force, --backup, --dry-run.
+ */
+export async function copyTemplateTree(srcDir, destDir, options = {}) {
+  const { force = false, dryRun = false, backup = false } = options;
+  const created = [];
+  const skipped = [];
+  const updated = [];
+
+  async function walk(src, dest) {
+    if (!existsSync(src)) return;
+    if (!dryRun && !existsSync(dest)) mkdirSync(dest, { recursive: true });
+
+    for (const entry of readdirSync(src)) {
+      const srcPath = join(src, entry);
+      const destPath = join(dest, entry);
+
+      if (statSync(srcPath).isDirectory()) {
+        await walk(srcPath, destPath);
+      } else {
+        const content = readFileSync(srcPath, 'utf8');
+        if (!existsSync(destPath)) {
+          if (!dryRun) writeFileSync(destPath, content, 'utf8');
+          created.push(destPath);
+        } else if (force) {
+          if (backup && !dryRun) {
+            await backupFile(destPath);
+          }
+          if (!dryRun) writeFileSync(destPath, content, 'utf8');
+          updated.push(destPath);
+        } else {
+          skipped.push(destPath);
+        }
+      }
+    }
+  }
+
+  await walk(srcDir, destDir);
+  return { created, skipped, updated };
 }

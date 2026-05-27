@@ -8,6 +8,7 @@ import { installCodexAdapter } from '../core/adapters/codex.mjs';
 import { prompt } from '../utils/prompt.mjs';
 
 const DOC_VERSION = '1.0.0';
+const DEFAULT_FILE_COUNT = 7;
 
 /**
  * Non-interactive initialization.
@@ -29,18 +30,42 @@ export async function runInit(options = {}) {
     return { created: [], skipped: [], overwritten: [] };
   }
 
+  // Dry-run: skip all writes, report planned actions only
+  if (dryRun) {
+    if (!quiet) {
+      process.stdout.write('\n[dry-run] Planned actions:\n');
+      process.stdout.write(`  AI Tool: ${aiTool}\n`);
+      process.stdout.write(`  Would create workspace files (from ${DEFAULT_FILE_COUNT} defaults)\n`);
+      if (aiTool === 'claude' || aiTool === 'all') {
+        process.stdout.write('  Would install Claude adapter (.claude/skills/docsync/, .docsync/adapters/claude/)\n');
+      }
+      if (aiTool === 'codex' || aiTool === 'all') {
+        process.stdout.write('  Would install Codex adapter (.agents/skills/docsync/, .docsync/adapters/codex/)\n');
+      }
+      process.stdout.write('  Would write .docsync/state/install.json\n');
+    }
+    return { created: [], skipped: [], overwritten: [] };
+  }
+
   // Create workspace (directories + config files)
   const workspaceFiles = await createWorkspace(cwd);
 
   // Install adapters
   const installedFiles = [];
+  const installed = {};
   if (aiTool === 'claude' || aiTool === 'all') {
     const result = await installClaudeAdapter(cwd);
-    if (result.ok) installedFiles.push(...result.files);
+    if (result.ok) {
+      installedFiles.push(...result.files);
+      installed.claude = result.installed;
+    }
   }
   if (aiTool === 'codex' || aiTool === 'all') {
     const result = await installCodexAdapter(cwd);
-    if (result.ok) installedFiles.push(...result.files);
+    if (result.ok) {
+      installedFiles.push(...result.files);
+      installed.codex = result.installed;
+    }
   }
 
   // Write install.json
@@ -50,15 +75,14 @@ export async function runInit(options = {}) {
     installedAt: new Date().toISOString(),
     docsyncVersion: pkg.default.version,
     aiTool,
-    filesCreated: [...workspaceFiles, ...installedFiles],
     templateVersion: DOC_VERSION,
+    installed,
+    filesCreated: [...workspaceFiles, ...installedFiles],
   };
 
   const stateDir = join(cwd, '.docsync', 'state');
   const installPath = join(stateDir, 'install.json');
-  if (!dryRun) {
-    writeFileSync(installPath, JSON.stringify(installJson, null, 2), 'utf8');
-  }
+  writeFileSync(installPath, JSON.stringify(installJson, null, 2), 'utf8');
 
   if (!quiet) {
     process.stdout.write('\nDocSync init complete.\n');

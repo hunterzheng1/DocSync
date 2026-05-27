@@ -1,0 +1,5 @@
+interface:
+  display_name: "DocSync"
+  short_description: "Synchronize README, AGENTS, and CLAUDE docs with repository facts"
+policy:
+  allow_implicit_invocation: false

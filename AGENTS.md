@@ -52,6 +52,27 @@ DocSync 是一个可通过 npm 发布的 CLI 工具（`@hunterzheng/docsync`）�
 - 不使用 `curl`/`wget` 下载外部资源
 - 不修改凭证或认证文件
 
+## 模块边界
+
+- `src/core/adapters/*.mjs` — Claude / Codex Skill 安装器（从 `templates/skills/docsync/` 复制模板）
+- `templates/skills/docsync/` — Skill 源模板（唯一发布源）
+- `src/core/workspace.mjs` — `.docsync/` 工作区创建和验证
+- `src/commands/init.mjs` — 引导入口（npx 无参数 → runBootstrap）
+- `src/commands/sync.mjs` — 文档同步核心逻辑
+
+## 验证要求
+
+- 改 adapter 或 `templates/skills/docsync/` 模板时必须运行 `npm test`
+- 新增模板文件后检查 `npm run pack:dry` 确认被打包
+
+## 规则优先级
+
+1. 当前对话中的用户明确指令
+2. 安全约束
+3. `.docsync/rules/override.md`
+4. 仓库事实
+5. `.docsync/rules/default.md`
+
 ## SDD 工作流
 
 本项目使用 Specification-Driven Development，通过 `/opsx:` 系列命令驱动：
@@ -63,17 +84,10 @@ DocSync 是一个可通过 npm 发布的 CLI 工具（`@hunterzheng/docsync`）�
 ## 开发与测试
 
 ```bash
-# 运行全部测试
-npm test
-
-# 语法检查
-npm run lint
-
-# 发布包预检
-npm run pack:dry
-
-# 本地全局 link（开发调试用）
-npm link
+npm test              # 运行全部测试
+npm run lint          # ESM 语法检查
+npm run pack:dry      # 发布包预检
+npm link              # 本地全局 link（开发调试用）
 ```
 
 ## 技术栈

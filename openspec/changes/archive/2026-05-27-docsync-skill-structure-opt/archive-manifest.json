@@ -1,0 +1,15 @@
+{
+  "change": "docsync-skill-structure-opt",
+  "archived_at": "2026-05-27T14:27:08.426Z",
+  "reason": "变更已完成实施",
+  "method": "skywalk-full-spec-archive",
+  "source_path": "openspec/changes/docsync-skill-structure-opt",
+  "archive_path": "openspec/changes/archive/2026-05-27-docsync-skill-structure-opt",
+  "copied_specs": [
+    {
+      "capability": "skill-structure",
+      "source": "openspec/changes/archive/2026-05-27-docsync-skill-structure-opt/specs/skill-structure/spec.md",
+      "target": "openspec/specs/skill-structure/spec.md"
+    }
+  ]
+}

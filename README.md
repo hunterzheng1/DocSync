@@ -12,7 +12,25 @@ npx 首次运行会自动下载并启动交互式引导，完成环境检查、`
 
 ### AI 驱动使用方式
 
-引导完成后，在 Claude Code 中通过以下 slash 命令完成文档同步：
+引导完成后，在 AI 工具内使用以下 slash 命令完成文档同步：
+
+- **Claude Code**：安装 slash command wrapper 后可使用 `/docsync:init`、`/docsync:sync`、`/docsync:rules`
+- **Codex**：可直接请求 DocSync Skill 执行同名流程
+
+## 安装产物
+
+npx 引导后会在项目中生成以下文件：
+
+| 路径 | 用途 |
+|------|------|
+| `.docsync/` | DocSync 工作区（配置、规则、上下文、适配器、状态） |
+| `.claude/skills/docsync/` | Claude Code 项目级 Skill |
+| `.claude/commands/docsync/` | Claude slash command wrapper（init/sync/rules） |
+| `.agents/skills/docsync/` | Codex 项目级 Agent Skill |
+| `AGENTS.md` | 跨 Agent 通用规则入口 |
+| `CLAUDE.md` | Claude Code 轻量适配层 |
+
+根据选择的 AI 工具，只会安装对应的文件（选 Claude 不创建 `.agents/`，选 Codex 不创建 `.claude/`）。
 
 | Slash 命令 | 用途 |
 |-----------|------|
