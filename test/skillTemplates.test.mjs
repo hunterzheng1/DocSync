@@ -42,14 +42,21 @@ describe('claude skill template', () => {
     assert.ok(content.includes('硬性规则') || content.includes('硬规则'), 'should have hard rules section');
   });
 
-  it('SKILL.md does not contain CLI invocation commands', () => {
+  it('SKILL.md CLI invocations use npx pattern', () => {
     const content = readFileSync(SKILL_TEMPLATE, 'utf8');
-    // Should not guide users to run docsync CLI commands — AI uses own tools instead
-    assert.ok(!content.includes('Bash') || !content.includes('docsync doctor'), 'should not contain "docsync doctor" CLI invocation');
-    assert.ok(!content.includes('Bash') || !content.includes('docsync prep'), 'should not contain "docsync prep" CLI invocation');
-    assert.ok(!content.includes('Bash') || !content.includes('docsync init'), 'should not contain "docsync init" CLI invocation');
-    assert.ok(!content.includes('docsync skill install'), 'should not contain "docsync skill install" CLI invocation');
-    assert.ok(!content.includes('docsync codex install'), 'should not contain "docsync codex install" CLI invocation');
+    // When invoking CLI, must use npx @hunterzheng/docsync pattern (not bare "docsync")
+    // Check for "docsync doctor/prep/init" that is NOT part of "npx" or a slash command heading
+    const lines = content.split('\n').filter(line => {
+      // Skip headings like ## /docsync:init
+      if (line.startsWith('#')) return false;
+      // Skip slash command references like /docsync:sync
+      if (line.includes('/docsync:')) return false;
+      // Skip npx invocations — these are the correct pattern
+      if (line.includes('npx @hunterzheng/docsync')) return false;
+      // Check for bare docsync CLI invocations
+      return /\bdocsync\s+(doctor|prep|init|skill|codex)\b/i.test(line);
+    });
+    assert.equal(lines.length, 0, `should not invoke bare "docsync" command; use npx @hunterzheng/docsync instead. Found: ${lines.join('; ')}`);
   });
 
   it('SKILL.md embeds template contents', () => {

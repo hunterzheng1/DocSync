@@ -19,9 +19,12 @@ allowed-tools:
 | 命令 | 用途 |
 |------|------|
 | `/docsync:sync` | 完整文档同步（环境检查 → 上下文准备 → 读取 → 对比 → 编辑 → 格式修复 → 报告） |
+| `/docsync:sync --fast` | 快速文档同步（使用 git 事实推断影响范围） |
 | `/docsync:doctor` | 环境诊断（检查工具/文件状态） |
 | `/docsync:init` | 项目初始化（创建模板配置文件） |
 | `/docsync:prep` | 上下文准备（生成 repomix 文件） |
+| `/docsync:rules` | 规则维护（管理 override.md） |
+| `/docsync:rules show` | 查看当前 override 规则完整内容 |
 | `/docsync:skill-install` | 安装 Skill 文件到全局或项目 |
 | `/docsync:codex-install` | 安装 Codex 全局 AGENTS.md 规则 |
 
@@ -29,60 +32,46 @@ allowed-tools:
 
 ## `/docsync:sync` — 完整文档同步
 
-### Phase 1: 环境检查
+### 前置校验
 
-使用 **Bash** 逐一检查：
+1. 使用 **Glob** 检查 `.docsync/state/install.json` 是否存在。如不存在，输出错误：`ERR_NO_INSTALL: 未完成引导安装。请先运行 npx @hunterzheng/docsync 初始化。`
+2. 使用 **Glob** 检查 `.docsync/config/`、`.docsync/context/`、`.docsync/rules/` 是否存在。如任一缺失，输出错误：`ERR_WORKSPACE_INCOMPLETE: .docsync/ 缺少必需子目录。请重新运行 npx 引导或运行 /docsync:init 修复。`
+
+### 完整模式（默认）
+
+直接调用 CLI 同步命令：
 
 ```
-node --version
-npm --version
-git --version
-which repomix
-which markdownlint-cli2
+npx @hunterzheng/docsync sync [--cwd <path>] [target1] [target2]
 ```
 
-如果 Node.js、npm、git 缺失，提示用户安装并暂停。如果 repomix 缺失，提示 `npm i -g repomix` 并暂停。markdownlint-cli2 为可选，缺失则跳过格式修复步骤。
+支持的参数：
+- 无参数：同步全部三份核心文档（README.md、AGENTS.md、CLAUDE.md）
+- 指定文件：`npx @hunterzheng/docsync sync README.md` — 仅同步 README.md
+- 多文件：`npx @hunterzheng/docsync sync README.md AGENTS.md` — 仅同步指定文件
+- 带自然语言指令：在 CLI 同步后，根据用户的额外要求手动 **Edit** 补充文档内容
 
-### Phase 2: 项目初始化
+### 快速模式
 
-确保下方「嵌入模板」中的 4 个文件存在于项目中。使用 **Glob** 检查是否存在，对缺失的文件使用 **Write** 创建（内容来自嵌入模板）。**不要覆盖已有文件**。
+调用 CLI 快速同步：
 
-### Phase 3: 准备上下文
+```
+npx @hunterzheng/docsync sync --fast [target1]
+```
 
-1. **Bash** 运行 `git status --short` 输出当前状态
-2. **Bash** 运行 `repomix -o repomix-output.xml` 生成上下文
-3. **Bash** 运行 `markdownlint-cli2 --fix` 修复格式（如已安装）
+快速模式使用轻量 git 事实（最近提交、status --short、diff --name-only）推断影响范围并快速更新。如信息不足或检测到高风险内容，CLI 会自动升级为完整同步。
 
-### Phase 4: 读取项目上下文
+### 同步报告
 
-使用 **Read** 读取 `repomix-output.xml`，理解项目结构、代码和现有文档。
-使用 **Glob** 搜索 `**/*.md` 列出所有 Markdown 文件。
+CLI 命令执行后会输出同步报告，包含：更新的文件、跳过的文件、使用的事实、同步模式、验证结果。将报告展示给用户。
 
-### Phase 5: 对比与编辑
-
-对比代码事实与现有文档，使用 **Edit** 或 **Write** 更新：
-
-| 文档 | 面向 | 核心内容 |
-|------|------|----------|
-| README.md | 用户 | 简介、安装、快速开始、命令参考、开发指南、安全说明 |
-| AGENTS.md | AI Agent | 项目说明、命令契约、开发规则、验证要求、安全约束 |
-| CLAUDE.md | Claude Code | 项目概览、常用命令、开发规范、目录结构 |
-
-**硬性规则：**
+### 硬性规则
 
 1. 最小化变更：只更新需要的内容，不重写整篇文档
 2. 禁止编造：所有命令、端口、环境变量必须来自仓库事实
 3. 标记不确定内容：使用 `TODO(review)` 标注
 4. 禁止读取或输出密钥、token、凭证
 5. 禁止执行 `git commit`、`git push`、`npm publish`
-
-### Phase 6: 格式修复
-
-**Bash** 运行 `markdownlint-cli2 --fix`（如已安装）。
-
-### Phase 7: 报告
-
-输出：更新的文件列表及变更摘要、使用的代码事实、TODO(review) 项。
 
 ---
 
@@ -118,23 +107,117 @@ which markdownlint-cli2
 
 ## `/docsync:init` — 项目初始化
 
-使用 **Glob** 检查以下 4 个文件是否存在，对缺失的使用 **Write** 创建（内容来自下方「嵌入模板」章节）。**不覆盖已有文件**。完成后输出创建的文件列表。
+### 前置校验
 
-| 文件 | 用途 |
-|------|------|
-| `repomix.config.json` | Repomix 配置 |
-| `.repomixignore` | Repomix 忽略规则 |
-| `.markdownlint-cli2.jsonc` | Markdown 格式配置 |
-| `docs/doc-sync-rules.md` | 文档同步规则 |
+1. 使用 **Glob** 检查 `.docsync/state/install.json` 是否存在。
+2. 使用 **Glob** 检查 `.docsync/` 是否包含 `config`、`context`、`rules` 子目录。
+
+### 初始化流程
+
+1. **安装状态检查**：如 `.docsync/state/install.json` 不存在，提示：`ERR_NO_INSTALL: 未完成引导安装。请先运行 npx @hunterzheng/docsync 初始化。`
+2. **工作区完整性检查**：如 `.docsync/` 缺少 rules、config、adapters 等子目录，提示：`ERR_WORKSPACE_INCOMPLETE: .docsync/ 结构不完整。请重新运行 npx 引导或手动修复。`
+3. **刷新上下文**：如工作区完整，调用 `npx @hunterzheng/docsync prep` 或手动运行 git status 和 repomix
+4. **环境检查**：调用 `npx @hunterzheng/docsync doctor` 展示环境状态
+5. **读取规则**：使用 **Read** 读取 `.docsync/rules/default.md` 和 `.docsync/rules/override.md`（如存在）
+6. **创建或更新三份核心文档**：对不存在的文档使用下方「嵌入模板」创建（README.md、AGENTS.md、CLAUDE.md）
+7. **输出同步报告**：展示创建/更新的文件列表
+
+### 嵌入文档模板
+
+#### README.md 模板（如不存在时创建）
+
+```markdown
+# Project
+
+## Overview
+
+TODO: Add project description
+
+## Installation
+
+TODO: Add installation instructions
+
+## Usage
+
+TODO: Add usage instructions
+```
+
+#### AGENTS.md 模板（如不存在时创建）
+
+```markdown
+# AGENTS.md
+
+## Project Overview
+
+TODO: Add project overview
+
+## DocSync
+
+See .docsync/ for document sync configuration.
+```
+
+#### CLAUDE.md 模板（如不存在时创建）
+
+```markdown
+# CLAUDE.md
+
+## Project Context
+
+TODO: Add project context
+```
+
+---
+
+## `/docsync:rules` — 规则维护
+
+维护 `.docsync/rules/override.md` 文件，支持查看、添加文档级规则、添加 protected content。
+
+### show 子命令
+
+- 使用 **Read** 读取 `.docsync/rules/override.md`
+- 展示完整内容给用户
+
+### 无参数查看规则
+
+- 如 override.md 不存在，展示：`当前无 override 规则。你可以补充文档级规则或 ProtectedContent。`
+- 如 override.md 存在，展示规则摘要（文件标题、各章节标题），询问用户要补充什么
+
+### 添加文档级规则
+
+- 用户指定目标文件和规则内容时，将规则追加到 `.docsync/rules/override.md`
+- 格式：在 `## <targetDoc> Rules` 章节下添加条目，如章节不存在则创建
+- 示例：`/docsync:rules README.md 必须使用英文` → 在 override.md 中添加 `## README.md Rules` 章节
+
+### 添加 ProtectedContent
+
+- 用户指定 protected content 时，在 override.md 的 `## ProtectedContent` 章节下添加条目
+- 格式：
+  ```
+  ### <slug>
+  Target: <targetDoc>
+  Text: <protected text>
+  ```
+- 如 `## ProtectedContent` 章节不存在则创建
+
+### 通用规则
+
+1. 修改前展示将要追加/修改的内容，等待用户确认
+2. 不覆盖 override.md 中已有的规则内容，仅追加或替换同名章节
+3. 修改后使用 **Read** 验证最终文件内容
 
 ---
 
 ## `/docsync:prep` — 上下文准备
 
-1. **确保模板存在**：参考 `/docsync:init` 检查并创建缺失模板
-2. **Git 状态**：**Bash** 运行 `git status --short`
-3. **生成上下文**：**Bash** 运行 `repomix -o repomix-output.xml`
-4. **格式修复**：**Bash** 运行 `markdownlint-cli2 --fix`（如已安装，可跳过）
+### Phase 1: 确保模板存在
+
+参考 `/docsync:init` 检查并创建缺失模板。
+
+### Phase 2: 生成上下文
+
+1. **Git 状态**：**Bash** 运行 `git status --short`
+2. **生成上下文**：**Bash** 运行 `repomix -o repomix-output.xml`
+3. **格式修复**：**Bash** 运行 `markdownlint-cli2 --fix`（如已安装，可跳过）
 
 ---
 
