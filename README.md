@@ -4,7 +4,15 @@
 
 ## 安装与使用
 
-### 全局安装（推荐，所有项目可用）
+### 方式一：npx 临时使用（推荐，快速上手）
+
+```bash
+npx @hunterzheng/docsync
+```
+
+npx 首次运行会自动下载并启动交互式引导，完成环境检查、`.docsync/` 工作区创建、AI 适配器安装和三份核心文档初始化。
+
+### 方式二：全局安装
 
 ```bash
 npm i -g @hunterzheng/docsync
@@ -12,50 +20,28 @@ npm i -g @hunterzheng/docsync
 
 安装后，在任意项目中打开 Claude Code，AI 会自动加载 DocSync Skill。输入 `/docsync:sync` 即可开始文档同步。
 
-### 项目级安装（仅当前项目可用）
+### 方式三：项目级安装
 
 ```bash
 npm i -D @hunterzheng/docsync
 ```
 
-安装后，在当前项目的 Claude Code 中使用 `/docsync:sync`。
+### AI 驱动使用方式
 
-### 安装后的 AI 引导体验
-
-安装完成后，在 Claude Code 中输入 `/docsync:sync`，AI 会：
-
-1. **检查环境**（Node.js、Repomix 等是否安装）
-2. **提示安装缺失工具**（如有必要）
-3. **生成项目上下文文件**（repomix-output.xml）
-4. **读取项目代码和文档**
-5. **对比现有文档与代码事实**
-6. **更新或创建 README.md、AGENTS.md、CLAUDE.md**
-7. **运行 markdownlint 格式修复**
-8. **输出结构化同步报告**
-
-全程无需在终端手动执行任何 CLI 命令。AI 直接使用自身工具（Read, Write, Edit, Bash）完成所有步骤。
-
-### 通过 npx 临时使用
-
-```bash
-npx @hunterzheng/docsync help
-```
-
-## AI 驱动使用方式
-
-安装 DocSync Skill 后，在 Claude Code 中通过 slash 命令触发文档同步工作流：
+安装完成后，在 Claude Code 中通过以下 slash 命令完成文档同步：
 
 | Slash 命令 | 用途 |
 |-----------|------|
-| `/docsync:sync` | 完整文档同步（检查环境 → 准备上下文 → 读取上下文 → 对比差异 → 编辑文档 → 格式修复 → 报告） |
+| `/docsync:init` | 项目初始化（检查环境、创建模板文件） |
+| `/docsync:sync` | 完整文档同步（环境检查 → 上下文准备 → 对比 → 编辑 → 格式修复 → 报告） |
+| `/docsync:sync --fast` | 快速文档同步（使用 git 事实推断影响范围） |
+| `/docsync:sync [file]` | 同步指定文件，如 `README.md` |
+| `/docsync:rules` | 维护 override 规则（管理 `.docsync/rules/override.md`） |
+| `/docsync:rules show` | 查看当前 override 规则完整内容 |
 | `/docsync:doctor` | 环境诊断（工具/文件检查） |
-| `/docsync:init` | 项目初始化（安装模板配置） |
 | `/docsync:prep` | 上下文准备（生成 repomix 文件） |
-| `/docsync:skill-install` | 安装 Claude Skill 到全局或项目 |
-| `/docsync:codex-install` | 安装 Codex 全局 AGENTS.md 规则 |
 
-AI 会读取 Skill 文件中的分步骤工作流，**直接使用自身工具**（Read, Write, Edit, Bash + repomix）逐步完成，无需在终端手动执行任何 CLI 命令。
-
+全程无需在终端手动执行任何 CLI 命令。
 
 ## 命令详细说明
 
@@ -64,6 +50,7 @@ AI 会读取 Skill 文件中的分步骤工作流，**直接使用自身工具**
 检查本地环境和工具安装状态，输出每个工具的已安装/未安装状态。
 
 **检查项目：**
+
 - 必需：Node.js、npm、git
 - 推荐：repomix（生成项目上下文）、markdownlint-cli2（Markdown 格式修复）
 - 可选：claude（Claude Code）、codex（Codex）、gh（GitHub CLI）
@@ -75,6 +62,30 @@ AI 会读取 Skill 文件中的分步骤工作流，**直接使用自身工具**
 docsync doctor              # 简洁输出
 docsync doctor --verbose    # 详细输出（含版本号）
 docsync doctor --quiet      # 只输出缺失项
+```
+
+---
+
+### docsync sync
+
+执行文档同步。支持完整模式和快速模式：
+
+**完整模式（默认）：**
+
+刷新项目上下文、提取仓库事实、读取规则、同步三份核心文档、运行格式修复、输出同步报告。
+
+**快速模式（`--fast`）：**
+
+使用轻量 git 事实（最近提交、status --short、diff --name-only）推断影响范围，快速更新相关文档。信息不足或检测到高风险内容时自动升级为完整同步。
+
+**示例：**
+
+```bash
+docsync sync                           # 同步全部三份核心文档
+docsync sync --fast                    # 快速同步
+docsync sync README.md                 # 仅同步 README.md
+docsync sync README.md AGENTS.md       # 同步指定文件
+docsync sync --cwd /path/to/project    # 指定目标目录
 ```
 
 ---
@@ -127,9 +138,9 @@ docsync prep --dry-run                # 只打印计划动作
 
 ---
 
-### docsync ai
+### docsync ai（legacy）
 
-启动交互式文档同步。这是核心命令，执行以下流程：
+启动交互式文档同步（旧版）。推荐使用 npx 引导后的 `/docsync:sync` 代替。
 
 1. **运行 prep**：先生成项目上下文（repomix-output.xml）
 2. **构建同步 prompt**：生成一段包含文档同步规则的 prompt，指导 AI 如何更新文档
@@ -150,6 +161,7 @@ docsync ai --extra "特别注意：更新安装说明部分" # 附加额外要�
 ```
 
 **同步规则（AI 必须遵守）：**
+
 1. 最小化变更：只更新需要的内容，不重写整篇文档
 2. 禁止编造：所有命令、端口、环境变量必须来自仓库事实
 3. 标记不确定内容：使用 `TODO(review)` 标注
@@ -159,7 +171,7 @@ docsync ai --extra "特别注意：更新安装说明部分" # 附加额外要�
 
 ---
 
-### docsync auto
+### docsync auto（legacy）
 
 非交互式文档同步（实验性）。与 `docsync ai` 的区别：
 
@@ -205,6 +217,7 @@ docsync skill path --project                  # 输出项目路径
 管理 Codex 的全局 AGENTS.md 规则片段。通过 **标记块（marker block）** 机制，在保留用户已有内容的前提下，插入/更新 DocSync 的规则片段。
 
 标记块格式：
+
 ```markdown
 <!-- DOCSYNC_START: doc-sync rules -->
 ... DocSync 规则内容 ...

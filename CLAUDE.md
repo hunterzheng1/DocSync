@@ -4,24 +4,48 @@
 
 ## 项目概述
 
-DocSync 是一个可通过 npm 发布的 CLI 工具，用于协调 Repomix、markdownlint、Claude Skill、Codex 规则和 AI 文档同步工作流。用户可在任意项目中通过 `docsync` 命令完成环境检查、上下文准备、格式修复和文档同步。
+DocSync 是一个可通过 npm 发布的 CLI 工具，用于协调 Repomix、markdownlint、Claude Skill、Codex 规则和 AI 文档同步工作流。用户通过 `npx @hunterzheng/docsync` 快速引导安装后，在 AI 工具内使用 `/docsync:*` 指令完成文档同步。
 
 - **包名**：`@hunterzheng/docsync`
 - **运行环境**：Node.js >= 18，ESM 模块格式
-- **CLI 入口**：`bin/docsync.mjs`
+- **CLI 入口**：`bin/docsync.mjs`（npx 无参数默认行为）
 - **命令分发**：`src/cli.mjs`
+- **核心模块**：`src/core/`（environment, workspace, rules, context, sync-plan, protected-content, transaction）
+- **AI 指令**：`/docsync:init`、`/docsync:sync`、`/docsync:rules`（通过 Claude Skill 模板实现）
 
 ## 常用命令
 
+### npx 入口（推荐）
+
 ```bash
-docsync help      # 查看所有命令
-docsync doctor    # 检查环境状态
-docsync init      # 初始化项目模板
-docsync prep      # 准备文档同步上下文
-docsync ai        # 启动交互式文档同步
-docsync auto      # 非交互式文档同步（实验性）
-docsync skill     # 管理 Claude Code Skill 文件
-docsync codex     # 管理 Codex 全局规则文件
+npx @hunterzheng/docsync          # 交互式引导安装
+npx @hunterzheng/docsync help     # 查看所有命令
+```
+
+### CLI 命令
+
+```bash
+docsync sync                      # 文档同步（完整模式，默认）
+docsync sync --fast               # 快速同步（使用 git 事实）
+docsync sync README.md            # 同步指定文件
+docsync doctor                    # 检查环境状态
+docsync init                      # 初始化项目模板（legacy，推荐用 npx）
+docsync prep                      # 准备文档同步上下文
+docsync ai                        # 启动交互式文档同步
+docsync auto                      # 非交互式文档同步（实验性）
+docsync skill                     # 管理 Claude Code Skill 文件
+docsync codex                     # 管理 Codex 全局规则文件
+```
+
+### AI Slash 命令（bootstrap 后）
+
+```
+/docsync:init                     # 项目初始化和首次同步
+/docsync:sync                     # 日常文档同步（完整模式）
+/docsync:sync --fast              # 快速同步
+/docsync:sync [file]              # 同步指定文件
+/docsync:rules                    # 维护 override 规则
+/docsync:rules show               # 查看当前规则
 ```
 
 ## SDD 工作流
@@ -91,6 +115,7 @@ npm run pack:dry      # 发布包预检
 ```
 
 示例：
+
 ```
 feat(init): 初始化 OpenSpec 项目
 
@@ -104,11 +129,12 @@ Closes #1
 
 ```
 DocSync/
-├── bin/docsync.mjs          # CLI 入口
+├── bin/docsync.mjs          # CLI 入口（npx 默认行为）
 ├── src/
 │   ├── cli.mjs              # 命令分发核心
-│   ├── commands/            # 各子命令实现
+│   ├── commands/            # 各子命令实现（init, prep, ai, sync, help 等）
 │   └── utils/               # 工具函数（fs, git, shell, paths, args, logger, prompt）
+├── core/                    # 核心模块（environment, workspace, rules, context, sync-plan 等）
 ├── templates/               # 模板资产
 │   ├── project/             # 项目配置模板
 │   ├── claude-skill/        # Claude Skill 模板

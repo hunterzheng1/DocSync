@@ -10,7 +10,9 @@ DocSync 是一个可通过 npm 发布的 CLI 工具（`@hunterzheng/docsync`）�
 
 | 命令 | 子命令 | 用途 |
 |------|--------|------|
-| `docsync init` | - | 在项目中安全初始化模板文件 |
+| `npx @hunterzheng/docsync` | - | npx 无参数引导入口（交互式 AI 工具选择 + 工作区创建） |
+| `docsync sync` | `--fast` / `[file...]` | 文档同步（完整模式 / 快速模式 / 指定文件） |
+| `docsync init` | - | 在项目中安全初始化模板文件（legacy，推荐用 npx） |
 | `docsync prep` | - | 准备项目上下文（init → git 状态 → repomix → markdownlint） |
 | `docsync ai` | - | 启动交互式文档同步（Claude Code） |
 | `docsync auto` | - | 非交互式文档同步（实验性，保守权限） |
@@ -19,6 +21,19 @@ DocSync 是一个可通过 npm 发布的 CLI 工具（`@hunterzheng/docsync`）�
 | `docsync codex` | install / update / path | 管理 Codex 全局 AGENTS.md 规则 |
 | `docsync version` | - | 显示版本号 |
 | `docsync help` | - | 显示帮助信息 |
+
+## AI Slash 命令契约
+
+安装 `.docsync/` 工作区后，AI 通过以下 slash 命令执行操作：
+
+| 命令 | 用途 |
+|------|------|
+| `/docsync:init` | 项目初始化和首次同步 |
+| `/docsync:sync` | 日常文档同步（完整模式） |
+| `/docsync:sync --fast` | 快速同步（使用 git 事实） |
+| `/docsync:sync [file]` | 同步指定文件 |
+| `/docsync:rules` | 维护 override 规则 |
+| `/docsync:rules show` | 查看当前规则 |
 
 ## 通用选项
 
